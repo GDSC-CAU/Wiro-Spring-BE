@@ -17,7 +17,20 @@ public class FireBaseUserRepository implements UserRepository{
 
     @Override
     public GetUserRes getUser(String id) throws Exception {
-        
+        Firestore firestore = FirestoreClient.getFirestore();
+        DocumentReference documentReference =
+                firestore.collection(COLLECTION_NAME).document(id);
+        ApiFuture<DocumentSnapshot> apiFuture = documentReference.get();
+        DocumentSnapshot documentSnapshot = apiFuture.get();
+        User user = null;
+        if(documentSnapshot.exists()){
+            user = documentSnapshot.toObject(User.class);
+            GetUserRes getUserRes = GetUserRes.userToGetUserRes(user);
+            return getUserRes;
+        }
+        else{
+            return null;
+        }
     }
 
 }
