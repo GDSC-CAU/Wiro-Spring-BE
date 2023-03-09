@@ -1,12 +1,10 @@
 package google.solution.controller;
 
-import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import google.solution.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +26,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/updateUserInfo")
-    public ResponseEntity<UpdateUserRes> updateUser(@RequestParam UpdateUserReq user) throws Exception{
+    @PostMapping("/updateUserInfo")
+    public ResponseEntity<UpdateUserRes> updateUser(@RequestBody UpdateUserReq user) throws Exception{
         UpdateUserRes updateUserRes = userService.updateUser(user);
         return ResponseEntity.ok().body(updateUserRes);
     }
