@@ -1,5 +1,7 @@
 package google.solution.service;
 
+import google.solution.dto.GetUserRes;
+import google.solution.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

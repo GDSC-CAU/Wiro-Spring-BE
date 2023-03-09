@@ -6,6 +6,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.User;
+import google.solution.dto.GetUserRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
