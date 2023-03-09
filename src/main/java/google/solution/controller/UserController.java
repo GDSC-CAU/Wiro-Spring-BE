@@ -1,13 +1,11 @@
 package google.solution.controller;
 
+import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
 import google.solution.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,4 +24,12 @@ public class UserController {
             return null;
         }
     }
+
+    @GetMapping("/updateUserInfo")
+    public String updateUser(@RequestParam User user) throws Exception{
+        return userService.updateUser(user);
+    }
+
+
+
 }
