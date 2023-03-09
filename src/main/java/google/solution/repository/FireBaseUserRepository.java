@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
@@ -20,9 +21,9 @@ public class FireBaseUserRepository implements UserRepository{
 
     @Override
     public GetUserRes getUser(String id) throws Exception {
-        Firestore firestore = FirestoreClient.getFirestore();
+        Firestore db = FirestoreClient.getFirestore();
         DocumentReference documentReference =
-                firestore.collection(COLLECTION_NAME).document(id);
+                db.collection(COLLECTION_NAME).document(id);
         ApiFuture<DocumentSnapshot> apiFuture = documentReference.get();
         DocumentSnapshot documentSnapshot = apiFuture.get();
         User user = null;
@@ -38,10 +39,10 @@ public class FireBaseUserRepository implements UserRepository{
 
     @Override
     public UpdateUserRes updateUser(UpdateUserReq user) throws Exception {
-        Firestore firestore = FirestoreClient.getFirestore();
-        ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture
-                = firestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
-        UpdateUserRes updateUserRes = new UpdateUserRes("업데이트 성공", apiFuture.get().getUpdateTime().toString());
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(COLLECTION_NAME).document(user.getId());
+        ApiFuture<WriteResult> future = docRef.update("email", user.getEmail(), "nickname", user.getNickname());
+        UpdateUserRes updateUserRes = new UpdateUserRes("업데이트 성공", future.get().getUpdateTime().toString());
         return updateUserRes;
     }
 
