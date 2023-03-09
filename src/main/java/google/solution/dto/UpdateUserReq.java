@@ -1,5 +1,8 @@
 package google.solution.dto;
 
+import lombok.Getter;
+
+@Getter
 public class UpdateUserReq {
 
     private String id;
