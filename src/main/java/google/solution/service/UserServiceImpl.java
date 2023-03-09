@@ -2,6 +2,7 @@ package google.solution.service;
 
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
+import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import google.solution.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserRes updateUser(User user) throws Exception {
+    public UpdateUserRes updateUser(UpdateUserReq user) throws Exception {
         return userRepository.updateUser(user);
     }
 

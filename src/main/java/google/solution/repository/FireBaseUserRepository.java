@@ -7,6 +7,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
+import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,7 @@ public class FireBaseUserRepository implements UserRepository{
     }
 
     @Override
-    public UpdateUserRes updateUser(User user) throws Exception {
+    public UpdateUserRes updateUser(UpdateUserReq user) throws Exception {
         Firestore firestore = FirestoreClient.getFirestore();
         ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture
                 = firestore.collection(COLLECTION_NAME).document(user.getId()).set(user);
