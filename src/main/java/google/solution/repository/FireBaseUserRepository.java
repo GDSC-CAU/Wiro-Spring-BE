@@ -18,6 +18,8 @@ import org.springframework.stereotype.Repository;
 public class FireBaseUserRepository implements UserRepository{
 
     public static final String COLLECTION_NAME = "user";
+    public static final String USER_EMAIL = "email";
+    public static final String USER_NICKNAME = "nickname";
 
     @Override
     public GetUserRes getUser(String id) throws Exception {
@@ -41,7 +43,7 @@ public class FireBaseUserRepository implements UserRepository{
     public UpdateUserRes updateUser(UpdateUserReq user) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(COLLECTION_NAME).document(user.getId());
-        ApiFuture<WriteResult> future = docRef.update("email", user.getEmail(), "nickname", user.getNickname());
+        ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, user.getEmail(), USER_NICKNAME, user.getNickname());
         UpdateUserRes updateUserRes = new UpdateUserRes("업데이트 성공", future.get().getUpdateTime().toString());
         return updateUserRes;
     }
