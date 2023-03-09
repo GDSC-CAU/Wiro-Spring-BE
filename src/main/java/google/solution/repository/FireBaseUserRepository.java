@@ -20,6 +20,9 @@ public class FireBaseUserRepository implements UserRepository{
     public static final String COLLECTION_NAME = "user";
     public static final String USER_EMAIL = "email";
     public static final String USER_NICKNAME = "nickname";
+    public static final String SUCCESS_MESSAGE = "성공";
+
+
 
     @Override
     public GetUserRes getUser(String id) throws Exception {
@@ -44,7 +47,7 @@ public class FireBaseUserRepository implements UserRepository{
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(COLLECTION_NAME).document(user.getId());
         ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, user.getEmail(), USER_NICKNAME, user.getNickname());
-        UpdateUserRes updateUserRes = new UpdateUserRes("업데이트 성공", future.get().getUpdateTime().toString());
+        UpdateUserRes updateUserRes = new UpdateUserRes(SUCCESS_MESSAGE, future.get().getUpdateTime().toString());
         return updateUserRes;
     }
 
