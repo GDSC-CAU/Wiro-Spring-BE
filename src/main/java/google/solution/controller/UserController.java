@@ -2,8 +2,10 @@ package google.solution.controller;
 
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
+import google.solution.dto.UpdateUserRes;
 import google.solution.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,9 @@ public class UserController {
     }
 
     @GetMapping("/updateUserInfo")
-    public String updateUser(@RequestParam User user) throws Exception{
-        return userService.updateUser(user);
+    public ResponseEntity<UpdateUserRes> updateUser(@RequestParam User user) throws Exception{
+        UpdateUserRes updateUserRes = userService.updateUser(user);
+        return ResponseEntity.ok().body(updateUserRes);
     }
 
 
