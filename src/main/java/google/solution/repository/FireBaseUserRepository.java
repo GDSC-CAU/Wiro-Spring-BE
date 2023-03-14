@@ -48,4 +48,8 @@ public class FireBaseUserRepository implements UserRepository{
         return updateUserRes;
     }
 
+    @Override
+    public String saveUser(User user) throws Exception{
+        return "ok";
+    }
 }
