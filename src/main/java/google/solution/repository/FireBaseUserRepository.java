@@ -22,7 +22,7 @@ public class FireBaseUserRepository implements UserRepository{
     public static final String USER_NICKNAME = "nickname";
 
     @Override
-    public GetUserRes getUser(String id) throws Exception {
+    public User getUser(String id) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference documentReference =
                 db.collection(COLLECTION_NAME).document(id);
@@ -31,8 +31,7 @@ public class FireBaseUserRepository implements UserRepository{
         User user = null;
         if(documentSnapshot.exists()){
             user = documentSnapshot.toObject(User.class);
-            GetUserRes getUserRes = GetUserRes.userToGetUserRes(user);
-            return getUserRes;
+            return user;
         }
         else{
             return null;

@@ -32,10 +32,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public GetUserRes getUser(String id) throws Exception {
-        if (userRepository.getUser(id) == null) {
+        User user = userRepository.getUser(id);
+        if (user == null) {
             throw new Exception();
         }
-        return userRepository.getUser(id);
+        GetUserRes getUserRes = GetUserRes.userToGetUserRes(user);
+        return getUserRes;
     }
 
     @Override
