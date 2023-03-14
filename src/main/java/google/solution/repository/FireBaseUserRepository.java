@@ -20,7 +20,7 @@ public class FireBaseUserRepository implements UserRepository{
     public static final String COLLECTION_NAME = "user";
     public static final String USER_EMAIL = "email";
     public static final String USER_NICKNAME = "nickname";
-    
+
     @Override
     public GetUserRes getUser(String id) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
