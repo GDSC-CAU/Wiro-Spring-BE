@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
+import google.solution.dto.LoginRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import google.solution.service.UserService;
