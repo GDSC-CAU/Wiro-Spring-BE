@@ -1,6 +1,7 @@
 package google.solution.config;
 
 import com.google.firebase.auth.FirebaseAuth;
+import google.solution.filter.JwtFilter;
 import google.solution.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
