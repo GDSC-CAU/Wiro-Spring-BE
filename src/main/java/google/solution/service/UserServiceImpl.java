@@ -1,6 +1,5 @@
 package google.solution.service;
 
-import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
@@ -16,6 +15,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public GetUserRes getUser(String id) throws Exception {
+        if (userRepository.getUser(id) == null) {
+            throw new Exception();
+        }
         return userRepository.getUser(id);
     }
 

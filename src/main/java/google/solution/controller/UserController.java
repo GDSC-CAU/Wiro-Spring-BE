@@ -5,6 +5,7 @@ import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import google.solution.service.UserService;
 import google.util.BaseResponse;
+import google.util.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,17 +22,17 @@ public class UserController {
             GetUserRes userInfo = userService.getUser(userId);
             return new BaseResponse<>(userInfo);
         } catch (Exception e) {
-            return new BaseResponse<>(e.getStatus());
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
 
     @PostMapping("/updateUserInfo")
-    public BaseResponse<UpdateUserRes> updateUser(@RequestBody UpdateUserReq user) throws Exception{
+    public BaseResponse<UpdateUserRes> updateUser(@RequestBody UpdateUserReq user) {
         try {
             UpdateUserRes updateUserRes = userService.updateUser(user);
             return new BaseResponse<>(updateUserRes);
         } catch (Exception e) {
-            return new BaseResponse<>(e.getStatus());
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
 
     }
