@@ -4,8 +4,8 @@ import google.solution.dto.GetUserRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import google.solution.service.UserService;
+import google.util.BaseResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,20 +16,24 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/getUserInfo/{userId}")
-    ResponseEntity<GetUserRes> getUser(@PathVariable("userId") String userId) {
+    BaseResponse<GetUserRes> getUser(@PathVariable("userId") String userId) {
         try {
             GetUserRes userInfo = userService.getUser(userId);
-            return ResponseEntity.ok().body(userInfo);
+            return new BaseResponse<>(userInfo);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return new BaseResponse<>(e.getStatus());
         }
     }
 
     @PostMapping("/updateUserInfo")
-    public ResponseEntity<UpdateUserRes> updateUser(@RequestBody UpdateUserReq user) throws Exception{
-        UpdateUserRes updateUserRes = userService.updateUser(user);
-        return ResponseEntity.ok().body(updateUserRes);
+    public BaseResponse<UpdateUserRes> updateUser(@RequestBody UpdateUserReq user) throws Exception{
+        try {
+            UpdateUserRes updateUserRes = userService.updateUser(user);
+            return new BaseResponse<>(updateUserRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
     }
 
 
