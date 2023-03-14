@@ -49,6 +49,9 @@ public class FireBaseUserRepository implements UserRepository{
 
     @Override
     public String saveUser(User user) throws Exception{
-        return "ok";
+        Firestore firestore = FirestoreClient.getFirestore();
+        ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture =
+                firestore.collection(COLLECTION_NAME).document(user.getUsername()).set(user);
+        return apiFuture.get().getUpdateTime().toString();
     }
 }
