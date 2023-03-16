@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 회원가입, 메인페이지, 리소스
-        web.ignoring().antMatchers("/users/")
+        web.ignoring().antMatchers("/users/updateUserInfo")
                 .antMatchers("/")
                 .antMatchers("/resources/**");
     }
