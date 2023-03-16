@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    // 생성자 지우고 이렇게 @Required로 코드 전환
     private final UserService userService;
     private final FirebaseAuth firebaseAuth;
 
