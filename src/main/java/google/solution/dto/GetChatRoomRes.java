@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class GetChatRoomsRes {
+public class GetChatRoomRes {
 
-    private List<String> chatRooms;
+    private String chatRoom;
 }
