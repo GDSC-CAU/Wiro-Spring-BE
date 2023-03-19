@@ -27,9 +27,10 @@ public class ChatController {
     public BaseResponse<SendMessageRes> sendMessage(@RequestBody Message message, Authentication authentication) {
         try {
             String id = authentication.getName();
-            SendMessageRes sendMessageRes = chatService.sendMessage(id,message);
+            SendMessageRes sendMessageRes = chatService.sendMessage(id, message);
             return new BaseResponse<>(sendMessageRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
+    }
 }
