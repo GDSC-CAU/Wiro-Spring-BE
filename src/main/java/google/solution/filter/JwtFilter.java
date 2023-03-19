@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
 //            String header = RequestUtil.getAuthorizationToken(request.getHeader("Authorization"));
 //            decodedToken = firebaseAuth.verifyIdToken(header);
 //        } catch (FirebaseAuthException | IllegalArgumentException e) {
-        } catch (FirebaseAuthException e) {
+        } catch (IllegalArgumentException e) {
             // ErrorMessage 응답 전송
             response.setStatus(HttpStatus.SC_UNAUTHORIZED);
             response.setContentType("application/json");
