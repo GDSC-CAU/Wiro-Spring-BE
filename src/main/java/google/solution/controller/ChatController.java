@@ -11,10 +11,7 @@ import google.util.BaseResponse;
 import google.util.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +26,17 @@ public class ChatController {
             String id = authentication.getName();
             SendMessageRes sendMessageRes = chatService.sendMessage(id, message);
             return new BaseResponse<>(sendMessageRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
+    @GetMapping("/showChatRooms")
+    public BaseResponse<List<GetChatRoomsRes>> getChatRooms(Authentication authentication) {
+        try {
+            String id = authentication.getName();
+            List<GetChatRoomsRes> getChatRoomsResList = chatService.getChatRooms(id);
+            return new BaseResponse<>(getChatRoomsResList);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
