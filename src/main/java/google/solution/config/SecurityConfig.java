@@ -25,6 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                        .authorizeRequests()
+                                .antMatchers("/api/**")
+                                        .permitAll();
         http.authorizeRequests()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new JwtFilter(userService, firebaseAuth),
@@ -35,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // 회원가입, 메인페이지, 리소스
-        web.ignoring().antMatchers("/users/updateUserInfo")
+        // 로그인, 메인페이지, 리소스
+        web.ignoring().antMatchers("/users/login")
                 .antMatchers("/")
                 .antMatchers("/resources/**");
     }

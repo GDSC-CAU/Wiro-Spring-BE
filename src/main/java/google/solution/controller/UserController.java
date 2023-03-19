@@ -11,8 +11,11 @@ import google.util.BaseResponseStatus;
 import google.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,20 +25,21 @@ public class UserController {
     private final FirebaseAuth firebaseAuth;
     private final UserService userService;
 
-    @GetMapping("/getUserInfo/{userId}")
-    BaseResponse<GetUserRes> getUser(@PathVariable("userId") String userId) {
+    @GetMapping("/getUserInfo")
+    BaseResponse<GetUserRes> getUser(Authentication authentication) {
         try {
-            GetUserRes userInfo = userService.getUser(userId);
-            return new BaseResponse<>(userInfo);
+            User user = ((User) authentication.getPrincipal());
+            return new BaseResponse<>(GetUserRes.userToGetUserRes(user));
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
 
     @PostMapping("/updateUserInfo")
-    public BaseResponse<UpdateUserRes> updateUser(@RequestBody UpdateUserReq user) {
+    public BaseResponse<UpdateUserRes> updateUser(@RequestBody UpdateUserReq updateUserReq, Authentication authentication) {
         try {
-            UpdateUserRes updateUserRes = userService.updateUser(user);
+            String id = authentication.getName();
+            UpdateUserRes updateUserRes = userService.updateUser(id, updateUserReq);
             return new BaseResponse<>(updateUserRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);

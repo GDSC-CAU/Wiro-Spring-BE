@@ -9,7 +9,7 @@ public interface UserRepository {
 
     public User getUser(String id) throws Exception;
 
-    public UpdateUserRes updateUser(UpdateUserReq user) throws Exception;
+    public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception;
 
     public String saveUser(User user) throws Exception;
 }

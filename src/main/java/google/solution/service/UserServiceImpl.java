@@ -41,8 +41,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserRes updateUser(UpdateUserReq user) throws Exception {
-        return userRepository.updateUser(user);
+    public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception {
+        System.out.println("여기 서비스");
+        return userRepository.updateUser(id, updateUserReq);
     }
 
     // 등록 코드

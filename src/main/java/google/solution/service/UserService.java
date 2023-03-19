@@ -10,7 +10,7 @@ public interface UserService extends UserDetailsService {
 
     public GetUserRes getUser(String id) throws Exception;
 
-    public UpdateUserRes updateUser(UpdateUserReq user) throws Exception;
+    public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception;
 
     public User register(String uid, String email, String nickname);
 
