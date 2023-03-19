@@ -1,10 +1,10 @@
-package google.solution.service;
+package google.solution.repository;
+
 
 import google.solution.domain.Message;
 import google.solution.dto.SendMessageRes;
 
-public interface ChatService {
+public interface ChatRepository {
 
     public SendMessageRes sendMessage(String id, Message message) throws Exception;
-
 }

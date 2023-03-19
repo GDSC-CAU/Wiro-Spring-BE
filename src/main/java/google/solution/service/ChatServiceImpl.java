@@ -2,6 +2,7 @@ package google.solution.service;
 
 import google.solution.domain.Message;
 import google.solution.domain.User;
+import google.solution.dto.SendMessageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

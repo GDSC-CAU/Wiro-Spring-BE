@@ -2,8 +2,10 @@ package google.solution.controller;
 
 
 import google.solution.domain.Message;
+import google.solution.dto.SendMessageRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
+import google.solution.service.ChatService;
 import google.solution.service.UserService;
 import google.util.BaseResponse;
 import google.util.BaseResponseStatus;
@@ -19,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/chat")
 public class ChatController {
 
-    private final UserService userService;
+    private final ChatService chatService;
 
     @PostMapping("/sendMessage")
     public BaseResponse<SendMessageRes> sendMessage(@RequestBody Message message, Authentication authentication) {
         try {
             String id = authentication.getName();
-            SendMessageRes sendMessageRes = userService.sendMessage(id,message);
+            SendMessageRes sendMessageRes = chatService.sendMessage(id,message);
             return new BaseResponse<>(sendMessageRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
