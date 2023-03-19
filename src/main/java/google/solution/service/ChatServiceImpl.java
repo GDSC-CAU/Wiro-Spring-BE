@@ -2,6 +2,7 @@ package google.solution.service;
 
 import google.solution.domain.Message;
 import google.solution.domain.User;
+import google.solution.dto.GetChatRoomsRes;
 import google.solution.dto.SendMessageRes;
 import google.solution.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,12 @@ public class ChatServiceImpl implements ChatService {
     public SendMessageRes sendMessage(String id, Message message) throws Exception {
         SendMessageRes sendMessageRes = chatRepository.sendMessage(id, message);
         return sendMessageRes;
+    }
+
+    @Override
+    public GetChatRoomsRes getChatRooms(String id) throws Exception {
+        GetChatRoomsRes getChatRoomsRes = chatRepository.getChatRooms(id);
+        return getChatRoomsRes;
     }
 
 }
