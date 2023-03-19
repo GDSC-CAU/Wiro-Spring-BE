@@ -27,7 +27,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/getUserInfo")
-    BaseResponse<GetUserRes> getUser(Authentication authentication) {
+    public BaseResponse<GetUserRes> getUser(Authentication authentication) {
         try {
             User user = ((User) authentication.getPrincipal());
             return new BaseResponse<>(GetUserRes.userToGetUserRes(user));
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public LoginRes register(@RequestHeader("Authorization") String authorization,
+    public BaseResponse<LoginRes> register(@RequestHeader("Authorization") String authorization,
                              @RequestBody LoginReq loginReq) {
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
@@ -63,12 +63,14 @@ public class UserController {
         // 사용자가 있다면 기존 정보 리턴
         User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
         if (user != null) {
-            return new LoginRes(user);
+            LoginRes loginRes = new LoginRes(user);
+            return new BaseResponse<>(loginRes);
         }
         // 사용자를 등록한다.
         User registeredUser = userService.register(
                 decodedToken.getUid(), decodedToken.getEmail(), loginReq.getNickname());
-        return new LoginRes(registeredUser);
+        LoginRes loginRes = new LoginRes(registeredUser);
+        return new BaseResponse<>(loginRes);
     }
 
 
