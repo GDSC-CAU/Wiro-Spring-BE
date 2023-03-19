@@ -41,4 +41,15 @@ public class ChatController {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
+
+    @GetMapping("/showChatRooms/{roomId}")
+    public BaseResponse<List<GetChatContentRes>> getChatContent(@PathVariable String roomId, Authentication authentication) {
+        try {
+            String id = authentication.getName();
+            List<GetChatContentRes> getChatContentRes = chatService.getChatContent(roomId, id);
+            return new BaseResponse<>(getChatContentRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
 }
