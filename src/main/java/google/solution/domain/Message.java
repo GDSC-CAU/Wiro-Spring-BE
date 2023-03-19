@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class Message {
 
-    private String source_id;
+    private String sourceId;
     private String content;
-    private String destination_id;
+    private String destinationId;
 }
