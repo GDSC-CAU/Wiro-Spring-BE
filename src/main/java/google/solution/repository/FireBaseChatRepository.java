@@ -1,9 +1,10 @@
 package google.solution.repository;
 
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.Firestore;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Message;
+import google.solution.dto.GetChatContentRes;
 import google.solution.dto.GetChatRoomRes;
 import google.solution.dto.SendMessageRes;
 import lombok.extern.slf4j.Slf4j;
@@ -31,15 +32,32 @@ public class FireBaseChatRepository implements ChatRepository{
 
     @Override
     public List<GetChatRoomRes> getChatRooms(String id) throws Exception {
-        List<GetChatRoomRes> list = new ArrayList<>();
+        List<GetChatRoomRes> getChatRoomRes = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
         Iterable<CollectionReference> collections =
                 db.collection(COLLECTION_NAME).document(id).listCollections();
         for (CollectionReference collRef : collections) {
             GetChatRoomRes chatRoom = new GetChatRoomRes(collRef.getId());
-            list.add(chatRoom);
+            getChatRoomRes.add(chatRoom);
         }
-        return list;
+        return getChatRoomRes;
     }
+
+    @Override
+    public List<GetChatContentRes> getChatContent(String roomId, String id) throws Exception {
+        List<GetChatContentRes> chatContents = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference chatContent = db.collection(COLLECTION_NAME).document(id).collection(roomId);
+        Query query = chatContent.orderBy("updateTime");
+        ApiFuture<QuerySnapshot> future = query.get();
+        List<QueryDocumentSnapshot> contents = future.get().getDocuments();
+        for (QueryDocumentSnapshot content : contents) {
+            GetChatContentRes getChatContentRes = content.toObject(GetChatContentRes.class);
+            chatContents.add(getChatContentRes);
+        }
+
+        return chatContents;
+    }
+
 
 }
