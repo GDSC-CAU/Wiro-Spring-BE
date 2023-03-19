@@ -12,6 +12,7 @@ import google.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -58,6 +59,11 @@ public class UserController {
         } catch (IllegalArgumentException | FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
+        }
+        // 사용자가 있다면 기존 정보 리턴
+        User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
+        if (user != null) {
+            return new LoginRes(user);
         }
         // 사용자를 등록한다.
         User registeredUser = userService.register(

@@ -40,8 +40,6 @@ public class FireBaseUserRepository implements UserRepository{
 
     @Override
     public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception {
-        System.out.println("여기 레포");
-        System.out.println("id = " + id);
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(COLLECTION_NAME).document(id);
         ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, updateUserReq.getEmail(), USER_NICKNAME, updateUserReq.getNickname());
