@@ -53,4 +53,15 @@ public class ChatController {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
+
+    @GetMapping("/showChatMessages")
+    public BaseResponse<List<GetChatMessageRes>> getChatMessages(Authentication authentication) {
+        try {
+            String id = authentication.getName();
+            List<GetChatMessageRes> getChatMessageRes = chatService.getChatMessages(id);
+            return new BaseResponse<>(getChatMessageRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
 }
