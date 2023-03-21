@@ -25,8 +25,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<GetChatRoomRes> getChatRooms(String id) throws Exception {
-        List<GetChatRoomRes> getChatRoomsRes = chatRepository.getChatRooms(id);
+    public GetChatRoomRes getChatRooms(String id) throws Exception {
+        GetChatRoomRes getChatRoomsRes = chatRepository.getChatRooms(id);
         return getChatRoomsRes;
     }
 

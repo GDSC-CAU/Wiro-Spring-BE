@@ -13,5 +13,5 @@ import java.util.List;
 @Setter
 public class GetChatRoomRes {
 
-    private String chatRoom;
+    private List<String> chatRooms;
 }

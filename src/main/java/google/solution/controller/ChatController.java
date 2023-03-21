@@ -33,10 +33,10 @@ public class ChatController {
     }
 
     @GetMapping("/showChatRooms")
-    public BaseResponse<List<GetChatRoomRes>> getChatRooms(Authentication authentication) {
+    public BaseResponse<GetChatRoomRes> getChatRooms(Authentication authentication) {
         try {
             String id = authentication.getName();
-            List<GetChatRoomRes> getChatRoomsRes = chatService.getChatRooms(id);
+            GetChatRoomRes getChatRoomsRes = chatService.getChatRooms(id);
             return new BaseResponse<>(getChatRoomsRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);

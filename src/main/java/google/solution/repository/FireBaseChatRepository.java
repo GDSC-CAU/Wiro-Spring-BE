@@ -31,16 +31,15 @@ public class FireBaseChatRepository implements ChatRepository{
     }
 
     @Override
-    public List<GetChatRoomRes> getChatRooms(String id) throws Exception {
-        List<GetChatRoomRes> getChatRoomRes = new ArrayList<>();
+    public GetChatRoomRes getChatRooms(String id) throws Exception {
+        List<String> getChatRoomRes = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
         Iterable<CollectionReference> collections =
                 db.collection(COLLECTION_NAME).document(id).listCollections();
         for (CollectionReference collRef : collections) {
-            GetChatRoomRes chatRoom = new GetChatRoomRes(collRef.getId());
-            getChatRoomRes.add(chatRoom);
+            getChatRoomRes.add(collRef.getId());
         }
-        return getChatRoomRes;
+        return new GetChatRoomRes(getChatRoomRes);
     }
 
     @Override

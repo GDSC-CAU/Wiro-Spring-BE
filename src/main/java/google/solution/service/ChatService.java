@@ -10,7 +10,7 @@ import java.util.List;
 public interface ChatService {
 
     public SendMessageRes sendMessage(String id, Message message) throws Exception;
-    public List<GetChatRoomRes> getChatRooms(String id) throws Exception;
+    public GetChatRoomRes getChatRooms(String id) throws Exception;
     public List<GetChatContentRes> getChatContent(String roomId, String id) throws Exception;
 
 
