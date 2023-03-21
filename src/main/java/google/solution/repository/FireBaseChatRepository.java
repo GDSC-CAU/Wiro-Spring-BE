@@ -20,6 +20,7 @@ import java.util.List;
 public class FireBaseChatRepository implements ChatRepository {
 
     public static final String COLLECTION_NAME = "user";
+    public static final String NICKNAME_FIELD = "nickname";
 
     @Override
     public SendMessageRes sendMessage(String id, Message message) throws Exception {
@@ -35,7 +36,7 @@ public class FireBaseChatRepository implements ChatRepository {
 
     private String findUserId(String nickname) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
-        Query query = db.collection(COLLECTION_NAME).whereEqualTo("nickname", nickname);
+        Query query = db.collection(COLLECTION_NAME).whereEqualTo(NICKNAME_FIELD, nickname);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> users = future.get().getDocuments();
         return users.get(0).getId();
