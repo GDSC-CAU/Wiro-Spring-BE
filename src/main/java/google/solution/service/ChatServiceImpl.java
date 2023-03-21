@@ -25,7 +25,7 @@ public class ChatServiceImpl implements ChatService {
         return sendMessageRes;
     }
 
-    private String nicknameToUserId(String nickname) throws Exception {
+    public String nicknameToUserId(String nickname) throws Exception {
         String userId = chatRepository.findUserId(nickname);
         return userId;
     }

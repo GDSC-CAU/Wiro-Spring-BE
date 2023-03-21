@@ -22,16 +22,18 @@ public class FireBaseChatRepository implements ChatRepository{
 
     @Override
     public SendMessageRes sendMessage(String id, Message message) throws Exception {
+        String nickname = findUserNickname(id);
+        String destinationId = findUserId(message.getDestinationId());
         Firestore db = FirestoreClient.getFirestore();
-        CollectionReference sourceIdCollectionRef = db.collection(COLLECTION_NAME).document(id).collection(message.getDestinationId());
+        CollectionReference sourceIdCollectionRef = db.collection(COLLECTION_NAME).document(id).collection(destinationId);
         sourceIdCollectionRef.add(message);
-        String destinationId = message.getDestinationId();
-        CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(message.getSourceId());
+        CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(nickname);
         destinationIdCollectionRef.add(message);
         return new SendMessageRes();
     }
 
-    private String findUserId(String nickname) throws Exception {
+    @Override
+    public String findUserId(String nickname) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         Query query = db.collection(COLLECTION_NAME).whereEqualTo("nickname", nickname);
         ApiFuture<QuerySnapshot> future = query.get();
