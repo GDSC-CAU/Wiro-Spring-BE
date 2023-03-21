@@ -31,6 +31,14 @@ public class FireBaseChatRepository implements ChatRepository{
         return new SendMessageRes();
     }
 
+    private String findUserId(String nickname) throws Exception {
+        Firestore db = FirestoreClient.getFirestore();
+        Query query = db.collection(COLLECTION_NAME).whereEqualTo("nickname", nickname);
+        ApiFuture<QuerySnapshot> future = query.get();
+        List<QueryDocumentSnapshot> users = future.get().getDocuments();
+        return users.get(0).getId();
+    }
+
     @Override
     public GetChatRoomRes getChatRooms(String id) throws Exception {
         List<String> getChatRoomRes = new ArrayList<>();
