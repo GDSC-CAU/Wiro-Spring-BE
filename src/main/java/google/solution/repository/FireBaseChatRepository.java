@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Message;
+import google.solution.domain.User;
 import google.solution.dto.GetChatContentRes;
 import google.solution.dto.GetChatMessageRes;
 import google.solution.dto.GetChatRoomRes;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Repository
 @Slf4j
-public class FireBaseChatRepository implements ChatRepository{
+public class FireBaseChatRepository implements ChatRepository {
 
     public static final String COLLECTION_NAME = "user";
 
@@ -39,6 +40,23 @@ public class FireBaseChatRepository implements ChatRepository{
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> users = future.get().getDocuments();
         return users.get(0).getId();
+    }
+
+    @Override
+    public String findUserNickname(String id) throws Exception {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference documentReference =
+                db.collection(COLLECTION_NAME).document(id);
+        ApiFuture<DocumentSnapshot> apiFuture = documentReference.get();
+        DocumentSnapshot documentSnapshot = apiFuture.get();
+        User user = null;
+        if(documentSnapshot.exists()){
+            user = documentSnapshot.toObject(User.class);
+            return user.getNickname();
+        }
+        else{
+            return null;
+        }
     }
 
     @Override

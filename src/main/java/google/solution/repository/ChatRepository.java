@@ -17,4 +17,5 @@ public interface ChatRepository {
     public List<GetChatMessageRes> getChatMessages(String id) throws Exception;
 
     public String findUserId(String nickname) throws Exception;
+    public String findUserNickname(String id) throws Exception;
 }
