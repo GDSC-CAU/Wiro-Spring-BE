@@ -5,6 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Message;
 import google.solution.dto.GetChatContentRes;
+import google.solution.dto.GetChatMessageRes;
 import google.solution.dto.GetChatRoomRes;
 import google.solution.dto.SendMessageRes;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +57,27 @@ public class FireBaseChatRepository implements ChatRepository{
         }
 
         return chatContents;
+    }
+
+    @Override
+    public List<GetChatMessageRes> getChatMessages(String id) throws Exception {
+        List<GetChatMessageRes> chatMessages = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference user = db.collection(COLLECTION_NAME).document(id);
+        Iterable<CollectionReference> collections = user.listCollections();
+
+        for (CollectionReference collRef : collections) {
+            CollectionReference chatMessage = user.collection(collRef.getId());
+            Query query = chatMessage.orderBy("updateTime");
+            ApiFuture<QuerySnapshot> future = query.get();
+            List<QueryDocumentSnapshot> messages = future.get().getDocuments();
+
+            for (QueryDocumentSnapshot message : messages) {
+                GetChatMessageRes getChatMessageRes = message.toObject(GetChatMessageRes.class);
+                chatMessages.add(getChatMessageRes);
+            }
+        }
+        return chatMessages;
     }
 
 
