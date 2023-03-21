@@ -20,9 +20,9 @@ public class FireBaseUserRepository implements UserRepository{
     public static final String COLLECTION_NAME = "user";
     public static final String USER_EMAIL = "email";
     public static final String USER_NICKNAME = "nickname";
-    
+
     @Override
-    public GetUserRes getUser(String id) throws Exception {
+    public User getUser(String id) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference documentReference =
                 db.collection(COLLECTION_NAME).document(id);
@@ -31,8 +31,7 @@ public class FireBaseUserRepository implements UserRepository{
         User user = null;
         if(documentSnapshot.exists()){
             user = documentSnapshot.toObject(User.class);
-            GetUserRes getUserRes = GetUserRes.userToGetUserRes(user);
-            return getUserRes;
+            return user;
         }
         else{
             return null;
@@ -40,12 +39,19 @@ public class FireBaseUserRepository implements UserRepository{
     }
 
     @Override
-    public UpdateUserRes updateUser(UpdateUserReq user) throws Exception {
+    public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docRef = db.collection(COLLECTION_NAME).document(user.getId());
-        ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, user.getEmail(), USER_NICKNAME, user.getNickname());
+        DocumentReference docRef = db.collection(COLLECTION_NAME).document(id);
+        ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, updateUserReq.getEmail(), USER_NICKNAME, updateUserReq.getNickname());
         UpdateUserRes updateUserRes = new UpdateUserRes(future.get().getUpdateTime().toString());
         return updateUserRes;
     }
 
+    @Override
+    public String saveUser(User user) throws Exception{
+        Firestore firestore = FirestoreClient.getFirestore();
+        ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture =
+                firestore.collection(COLLECTION_NAME).document(user.getUsername()).set(user);
+        return apiFuture.get().getUpdateTime().toString();
+    }
 }
