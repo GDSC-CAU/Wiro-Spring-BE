@@ -12,16 +12,16 @@ import lombok.Setter;
 @Setter
 public class GetChatContentRes {
 
-    private String sourceId;
+    private String sourceNickname;
     private String content;
-    private String destinationId;
+    private String destinationNickname;
     private String updateTime;
 
     public static GetChatContentRes messageToGetChatContentRes(Message message) {
         GetChatContentRes getChatContentRes = new GetChatContentRes();
-        getChatContentRes.setSourceId(message.getSourceNickname());
+        getChatContentRes.setSourceNickname(message.getSourceNickname());
         getChatContentRes.setContent(message.getContent());
-        getChatContentRes.setDestinationId(message.getDestinationNickname());
+        getChatContentRes.setDestinationNickname(message.getDestinationNickname());
         getChatContentRes.setUpdateTime(message.getUpdateTime());
         return getChatContentRes;
     }
