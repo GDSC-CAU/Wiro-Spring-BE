@@ -19,7 +19,7 @@ public class GetChatContentRes {
 
     public static GetChatContentRes messageToGetChatContentRes(Message message) {
         GetChatContentRes getChatContentRes = new GetChatContentRes();
-        getChatContentRes.setSourceId(message.getSourceId());
+        getChatContentRes.setSourceId(message.getSourceNickname());
         getChatContentRes.setContent(message.getContent());
         getChatContentRes.setDestinationId(message.getDestinationNickname());
         getChatContentRes.setUpdateTime(message.getUpdateTime());
