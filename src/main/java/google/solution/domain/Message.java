@@ -13,6 +13,6 @@ public class Message {
 
     private String sourceId;
     private String content;
-    private String destinationId;
+    private String destinationNickname;
     private String updateTime;
 }
