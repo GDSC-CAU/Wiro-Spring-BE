@@ -33,8 +33,7 @@ public class FireBaseChatRepository implements ChatRepository {
         return new SendMessageRes();
     }
 
-    @Override
-    public String findUserId(String nickname) throws Exception {
+    private String findUserId(String nickname) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         Query query = db.collection(COLLECTION_NAME).whereEqualTo("nickname", nickname);
         ApiFuture<QuerySnapshot> future = query.get();
@@ -42,8 +41,7 @@ public class FireBaseChatRepository implements ChatRepository {
         return users.get(0).getId();
     }
 
-    @Override
-    public String findUserNickname(String id) throws Exception {
+    private String findUserNickname(String id) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference documentReference =
                 db.collection(COLLECTION_NAME).document(id);

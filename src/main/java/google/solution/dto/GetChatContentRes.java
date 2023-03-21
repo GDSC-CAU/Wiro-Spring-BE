@@ -21,7 +21,7 @@ public class GetChatContentRes {
         GetChatContentRes getChatContentRes = new GetChatContentRes();
         getChatContentRes.setSourceId(message.getSourceId());
         getChatContentRes.setContent(message.getContent());
-        getChatContentRes.setDestinationId(message.getDestinationId());
+        getChatContentRes.setDestinationId(message.getDestinationNickname());
         getChatContentRes.setUpdateTime(message.getUpdateTime());
         return getChatContentRes;
     }
