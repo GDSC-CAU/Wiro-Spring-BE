@@ -12,6 +12,6 @@ public interface MissionRepository {
 
     public Mission getMissionInfo(String code) throws Exception;
     public List<SuccessMission> getSuccessMissions(MissionCompleteReq missionCompleteReq, String userId) throws Exception;
-    public void saveScore(double score, String userId) throws Exception;
+    public void saveScore(String code, double score, String userId) throws Exception;
     public MissionCompleteRes saveMissions(List<SuccessMission> missions, String userId) throws Exception;
 }

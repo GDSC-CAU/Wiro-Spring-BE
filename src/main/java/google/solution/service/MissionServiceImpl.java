@@ -30,13 +30,10 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
         List<SuccessMission> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
-        for (SuccessMission mission : missions) {
-            System.out.println("mission = " + mission);
-        }
-        if (missions.size() == 4) {
+        if (missions.size() > 0) {
             missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             double averageScore  = calculateWeightedAverage(missions);
-            missionRepository.saveScore(averageScore, userId);
+            missionRepository.saveScore(missionCompleteReq.getCode(), averageScore, userId);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions, userId);
             return missionCompleteRes;
         } else {

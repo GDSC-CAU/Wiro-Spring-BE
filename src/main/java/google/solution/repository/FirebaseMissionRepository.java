@@ -4,16 +4,15 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Mission;
+import google.solution.domain.Score;
 import google.solution.domain.SuccessMission;
-import google.solution.dto.GetChatContentRes;
-import google.solution.dto.GetMissionInfoRes;
-import google.solution.dto.MissionCompleteReq;
-import google.solution.dto.MissionCompleteRes;
+import google.solution.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -23,6 +22,7 @@ public class FirebaseMissionRepository implements MissionRepository {
     public static final String USER_COLLECTION = "user";
     public static final String MISSION = "mission";
     public static final String CHECK = "check";
+    public static final String SCORE = "score";
 
     @Override
     public Mission getMissionInfo(String code) throws Exception {
@@ -56,12 +56,28 @@ public class FirebaseMissionRepository implements MissionRepository {
             SuccessMission successMission = mission.toObject(SuccessMission.class);
             successMissions.add(successMission);
         }
-
         return successMissions;
     }
 
     @Override
-    public void saveScore(double score, String userId) throws Exception {
+    public void saveScore(String code, double average, String userId) throws Exception {
+        String id = Character.toString(code.charAt(0));
+        int category = (code.charAt(1)) - '0';
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(USER_COLLECTION).document(userId).
+                collection(SCORE).document(id);
+        ApiFuture<DocumentSnapshot> future  = docRef.get();
+        DocumentSnapshot document = future.get();
+        Score score = document.toObject(Score.class);
+        List<Double> scores = score.getScore();
+        for (Double aDouble : scores) {
+            System.out.println("aDouble = " + aDouble);
+        }
+        scores.set(category - 1, average);
+        // 
+        score.setScore(scores);
+        // 저장하기
+        docRef.update(SCORE, score);
     }
 
     @Override
