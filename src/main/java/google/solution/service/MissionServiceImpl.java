@@ -1,9 +1,6 @@
 package google.solution.service;
 
-import google.solution.domain.User;
 import google.solution.dto.GetMissionInfoRes;
-import google.solution.dto.GetUserRes;
-import google.solution.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

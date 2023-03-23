@@ -26,18 +26,21 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public GetChatRoomRes getChatRooms(String id) throws Exception {
         GetChatRoomRes getChatRoomsRes = chatRepository.getChatRooms(id);
         return getChatRoomsRes;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GetChatContentRes> getChatContent(String roomId, String id) throws Exception {
         List<GetChatContentRes> getChatContentRes = chatRepository.getChatContent(roomId, id);
         return getChatContentRes;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GetChatMessageRes> getChatMessages(String id) throws Exception {
         List<GetChatMessageRes> getChatMessageRes = chatRepository.getChatMessages(id);
         return getChatMessageRes;
