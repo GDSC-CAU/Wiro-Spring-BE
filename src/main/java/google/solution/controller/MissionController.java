@@ -4,6 +4,8 @@ package google.solution.controller;
 import google.solution.dto.GetChatRoomRes;
 import google.solution.dto.GetMissionInfoReq;
 import google.solution.dto.GetMissionInfoRes;
+import google.solution.dto.MissionCompleteReq;
+import google.solution.dto.MissionCompleteRes;
 import google.solution.service.MissionService;
 import google.util.BaseResponse;
 import google.util.BaseResponseStatus;
@@ -30,7 +32,7 @@ public class MissionController {
     @PostMapping("/missionComplete")
     public BaseResponse<MissionCompleteRes> missionComplete(@RequestBody MissionCompleteReq missionCompleteReq) {
         try {
-            MissionCompleteRes missionCompleteRes = missionService.getMissionInfo(missionCompleteReq);
+            MissionCompleteRes missionCompleteRes = missionService.missionComplete(missionCompleteReq);
             return new BaseResponse<>(missionCompleteRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
