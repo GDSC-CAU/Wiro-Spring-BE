@@ -12,6 +12,6 @@ import lombok.Setter;
 public class MissionCompleteReq {
 
     private String code;
-    private String score;
+    private double score;
     private String updateTime;
 }

@@ -31,11 +31,24 @@ public class MissionServiceImpl implements MissionService {
         List<MissionCompleteReq> missions = missionRepository.getSuccessMissions(missionCompleteReq);
         if (missions.size() == 4) {
             missions.add(missionCompleteReq);
-            calculateWeightedAverage(missions);
+            Double averageScore  = calculateWeightedAverage(missions);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions);
+            return missionCompleteRes;
         } else {
             missions.add(missionCompleteReq);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions);
+            return missionCompleteRes;
         }
+    }
+
+    private double calculateWeightedAverage(List<MissionCompleteReq> missions) {
+        double averageScore = 0.0;
+        for (int i = 0; i < missions.size(); i++) {
+            averageScore = averageScore + (i+1) * missions.get(i).getScore();
+        }
+        averageScore = averageScore / 15;
+        averageScore = Math.round((averageScore*1000) / 1000.0);
+
+        return averageScore;
     }
 }
