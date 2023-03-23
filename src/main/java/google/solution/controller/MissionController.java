@@ -26,4 +26,14 @@ public class MissionController {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
+
+    @PostMapping("/missionComplete")
+    public BaseResponse<MissionCompleteRes> missionComplete(@RequestBody MissionCompleteReq missionCompleteReq) {
+        try {
+            MissionCompleteRes missionCompleteRes = missionService.getMissionInfo(missionCompleteReq);
+            return new BaseResponse<>(missionCompleteRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
 }
