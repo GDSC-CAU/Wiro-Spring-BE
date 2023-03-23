@@ -27,17 +27,20 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq) throws Exception {
-        List<MissionCompleteReq> missions = missionRepository.getSuccessMissions(missionCompleteReq);
+    public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
+        List<MissionCompleteReq> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
+        for (MissionCompleteReq mission : missions) {
+            System.out.println("mission = " + mission);
+        }
         if (missions.size() == 4) {
             missions.add(missionCompleteReq);
             double averageScore  = calculateWeightedAverage(missions);
-            missionRepository.saveScore(averageScore);
-            MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions);
+            missionRepository.saveScore(averageScore, userId);
+            MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions, userId);
             return missionCompleteRes;
         } else {
             missions.add(missionCompleteReq);
-            MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions);
+            MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions,userId);
             return missionCompleteRes;
         }
     }

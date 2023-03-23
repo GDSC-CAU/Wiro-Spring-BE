@@ -1,8 +1,6 @@
 package google.solution.controller;
 
 
-import google.solution.dto.GetChatRoomRes;
-import google.solution.dto.GetMissionInfoReq;
 import google.solution.dto.GetMissionInfoRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
@@ -10,6 +8,7 @@ import google.solution.service.MissionService;
 import google.util.BaseResponse;
 import google.util.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,9 +29,10 @@ public class MissionController {
     }
 
     @PostMapping("/missionComplete")
-    public BaseResponse<MissionCompleteRes> missionComplete(@RequestBody MissionCompleteReq missionCompleteReq) {
+    public BaseResponse<MissionCompleteRes> missionComplete(@RequestBody MissionCompleteReq missionCompleteReq, Authentication authentication) {
         try {
-            MissionCompleteRes missionCompleteRes = missionService.missionComplete(missionCompleteReq);
+            String userId = authentication.getName();
+            MissionCompleteRes missionCompleteRes = missionService.missionComplete(missionCompleteReq, userId);
             return new BaseResponse<>(missionCompleteRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);

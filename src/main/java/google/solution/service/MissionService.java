@@ -8,5 +8,5 @@ import google.solution.dto.MissionCompleteRes;
 public interface MissionService {
 
     public GetMissionInfoRes getMissionInfo(String code) throws Exception;
-    public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq) throws Exception;
+    public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception;
 }

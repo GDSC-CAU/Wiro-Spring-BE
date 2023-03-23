@@ -19,6 +19,7 @@ import java.util.List;
 @Slf4j
 public class FirebaseMissionRepository implements MissionRepository {
     public static final String COLLECTION_NAME = "mission";
+    public static final String USER_COLLECTION = "user";
     public static final String MISSION = "mission";
     public static final String CHECK = "check";
 
@@ -41,12 +42,12 @@ public class FirebaseMissionRepository implements MissionRepository {
     }
 
     @Override
-    public List<MissionCompleteReq> getSuccessMissions(MissionCompleteReq missionCompleteReq) throws Exception {
+    public List<MissionCompleteReq> getSuccessMissions(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
         List<MissionCompleteReq> successMissions = new ArrayList<>();
         String id = Character.toString(missionCompleteReq.getCode().charAt(0));
         String category = Character.toString(missionCompleteReq.getCode().charAt(1));
         Firestore db = FirestoreClient.getFirestore();
-        CollectionReference missionCategory = db.collection(COLLECTION_NAME).document(id).collection(category);
+        CollectionReference missionCategory = db.collection(USER_COLLECTION).document(userId).collection(COLLECTION_NAME).document(id).collection(category);
         Query query = missionCategory.orderBy("updateTime").limit(4);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> missions = future.get().getDocuments();
@@ -59,11 +60,11 @@ public class FirebaseMissionRepository implements MissionRepository {
     }
 
     @Override
-    public void saveScore(double score) throws Exception {
+    public void saveScore(double score, String userId) throws Exception {
     }
 
     @Override
-    public MissionCompleteRes saveMissions(List<MissionCompleteReq> missions) throws Exception {
+    public MissionCompleteRes saveMissions(List<MissionCompleteReq> missions, String userId) throws Exception {
         return null;
     }
 }

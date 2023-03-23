@@ -10,7 +10,7 @@ import java.util.List;
 public interface MissionRepository {
 
     public Mission getMissionInfo(String code) throws Exception;
-    public List<MissionCompleteReq> getSuccessMissions(MissionCompleteReq missionCompleteReq) throws Exception;
-    public void saveScore(double score) throws Exception;
-    public MissionCompleteRes saveMissions(List<MissionCompleteReq> missions) throws Exception;
+    public List<MissionCompleteReq> getSuccessMissions(MissionCompleteReq missionCompleteReq, String userId) throws Exception;
+    public void saveScore(double score, String userId) throws Exception;
+    public MissionCompleteRes saveMissions(List<MissionCompleteReq> missions, String userId) throws Exception;
 }
