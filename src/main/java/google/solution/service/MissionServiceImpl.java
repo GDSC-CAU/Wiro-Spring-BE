@@ -31,7 +31,7 @@ public class MissionServiceImpl implements MissionService {
         List<MissionCompleteReq> missions = missionRepository.getSuccessMissions(missionCompleteReq);
         if (missions.size() == 4) {
             missions.add(missionCompleteReq);
-            Double averageScore  = calculateWeightedAverage(missions);
+            double averageScore  = calculateWeightedAverage(missions);
             missionRepository.saveScore(averageScore);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions);
             return missionCompleteRes;
