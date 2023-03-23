@@ -17,10 +17,10 @@ public class MissionController {
 
     private final MissionService missionService;
 
-    @GetMapping("/getMissionInfo")
-    public BaseResponse<GetMissionInfoRes> getMissionInfo(GetMissionInfoReq getMissionInfoReq) {
+    @GetMapping("/getMissionInfo/{code}")
+    public BaseResponse<GetMissionInfoRes> getMissionInfo(@PathVariable String code) {
         try {
-            GetMissionInfoRes getChatRoomsRes = missionService.getMissionInfo(getMissionInfoReq.getCode());
+            GetMissionInfoRes getChatRoomsRes = missionService.getMissionInfo(code);
             return new BaseResponse<>(getChatRoomsRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
