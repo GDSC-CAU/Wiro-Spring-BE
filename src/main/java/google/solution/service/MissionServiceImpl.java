@@ -1,6 +1,7 @@
 package google.solution.service;
 
 import google.solution.domain.Mission;
+import google.solution.domain.SuccessMission;
 import google.solution.dto.GetMissionInfoRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
@@ -28,24 +29,24 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
-        List<MissionCompleteReq> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
-        for (MissionCompleteReq mission : missions) {
+        List<SuccessMission> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
+        for (SuccessMission mission : missions) {
             System.out.println("mission = " + mission);
         }
         if (missions.size() == 4) {
-            missions.add(missionCompleteReq);
+            missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             double averageScore  = calculateWeightedAverage(missions);
             missionRepository.saveScore(averageScore, userId);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions, userId);
             return missionCompleteRes;
         } else {
-            missions.add(missionCompleteReq);
+            missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions,userId);
             return missionCompleteRes;
         }
     }
 
-    private double calculateWeightedAverage(List<MissionCompleteReq> missions) {
+    private double calculateWeightedAverage(List<SuccessMission> missions) {
         double averageScore = 0.0;
         for (int i = 0; i < missions.size(); i++) {
             averageScore = averageScore + (i+1) * missions.get(i).getScore();

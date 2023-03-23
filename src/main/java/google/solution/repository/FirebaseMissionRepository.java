@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Mission;
+import google.solution.domain.SuccessMission;
 import google.solution.dto.GetChatContentRes;
 import google.solution.dto.GetMissionInfoRes;
 import google.solution.dto.MissionCompleteReq;
@@ -42,8 +43,8 @@ public class FirebaseMissionRepository implements MissionRepository {
     }
 
     @Override
-    public List<MissionCompleteReq> getSuccessMissions(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
-        List<MissionCompleteReq> successMissions = new ArrayList<>();
+    public List<SuccessMission> getSuccessMissions(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
+        List<SuccessMission> successMissions = new ArrayList<>();
         String id = Character.toString(missionCompleteReq.getCode().charAt(0));
         String category = Character.toString(missionCompleteReq.getCode().charAt(1));
         Firestore db = FirestoreClient.getFirestore();
@@ -52,7 +53,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> missions = future.get().getDocuments();
         for (QueryDocumentSnapshot mission : missions) {
-            MissionCompleteReq successMission = mission.toObject(MissionCompleteReq.class);
+            SuccessMission successMission = mission.toObject(SuccessMission.class);
             successMissions.add(successMission);
         }
 
@@ -64,7 +65,7 @@ public class FirebaseMissionRepository implements MissionRepository {
     }
 
     @Override
-    public MissionCompleteRes saveMissions(List<MissionCompleteReq> missions, String userId) throws Exception {
+    public MissionCompleteRes saveMissions(List<SuccessMission> missions, String userId) throws Exception {
         return null;
     }
 }
