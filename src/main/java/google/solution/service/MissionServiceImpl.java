@@ -3,6 +3,7 @@ package google.solution.service;
 import google.solution.domain.Mission;
 import google.solution.domain.SuccessMission;
 import google.solution.dto.GetMissionInfoRes;
+import google.solution.dto.GetsuccessMissionsRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
 import google.solution.repository.MissionRepository;
@@ -52,5 +53,12 @@ public class MissionServiceImpl implements MissionService {
         averageScore = Double.parseDouble(String.format("%.3f",averageScore));
 
         return averageScore;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetsuccessMissionsRes getMissionHistory(String userId) throws Exception {
+        GetsuccessMissionsRes getsuccessMissionsRes = missionRepository.getMissionHistory(userId);
+        return getsuccessMissionsRes;
     }
 }
