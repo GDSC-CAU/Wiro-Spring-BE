@@ -24,7 +24,7 @@ public class FirebaseMissionRepository implements MissionRepository {
     public static final String USER_COLLECTION = "user";
     public static final int CATEGORY_LENGTH = 7;
     public static final String MISSION = "1";
-    public static final String CHECK = "2";
+    public static final String CHECKLIST = "2";
     public static final String SCORE = "score";
 
     @Override
@@ -128,5 +128,4 @@ public class FirebaseMissionRepository implements MissionRepository {
         }
         return new GetMissionHistoryRes(missionHistory);
     }
-
 }
