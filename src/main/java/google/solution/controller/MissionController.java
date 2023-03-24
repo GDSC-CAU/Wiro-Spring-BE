@@ -38,4 +38,16 @@ public class MissionController {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
     }
+
+    @GetMapping("/getMissions")
+    public BaseResponse<GetMissionsRes> getMissions(Authentication authentication) {
+        try {
+            String userId = authentication.getName();
+            GetMissionsRes getChatRoomsRes = missionService.getMissions(userId);
+            return new BaseResponse<>(getChatRoomsRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
 }
