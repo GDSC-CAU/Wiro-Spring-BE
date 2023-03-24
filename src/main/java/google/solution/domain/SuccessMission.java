@@ -12,11 +12,13 @@ import lombok.Setter;
 @Setter
 public class SuccessMission {
 
+    private String code;
     private double score;
     private String updateTime;
 
     public static SuccessMission missionCompleteReqToSuccessMission(MissionCompleteReq missionCompleteReq) {
         SuccessMission successMission = new SuccessMission();
+        successMission.setCode(missionCompleteReq.getCode());
         successMission.setScore(missionCompleteReq.getScore());
         successMission.setUpdateTime(missionCompleteReq.getUpdateTime());
         return successMission;
