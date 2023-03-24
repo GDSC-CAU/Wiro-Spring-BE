@@ -1,12 +1,10 @@
 package google.solution.service;
 
-import google.solution.dto.GetMissionInfoRes;
-import google.solution.dto.GetUserRes;
-import google.solution.dto.MissionCompleteReq;
-import google.solution.dto.MissionCompleteRes;
+import google.solution.dto.*;
 
 public interface MissionService {
 
     public GetMissionInfoRes getMissionInfo(String code) throws Exception;
     public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception;
+    public GetsuccessMissionsRes getSuccessMissions(String userId) throws Exception;
 }
