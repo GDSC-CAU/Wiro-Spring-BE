@@ -2,6 +2,7 @@ package google.solution.repository;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.Query.Direction;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Mission;
 import google.solution.domain.Score;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
@@ -49,7 +49,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         String category = Character.toString(missionCompleteReq.getCode().charAt(1));
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference missionCategory = db.collection(USER_COLLECTION).document(userId).collection(COLLECTION_NAME).document(id).collection(category);
-        Query query = missionCategory.orderBy("updateTime").limit(4);
+        Query query = missionCategory.orderBy("updateTime", Direction.DESCENDING).limit(4);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> missions = future.get().getDocuments();
         for (QueryDocumentSnapshot mission : missions) {
@@ -74,7 +74,7 @@ public class FirebaseMissionRepository implements MissionRepository {
             System.out.println("aDouble = " + aDouble);
         }
         scores.set(category - 1, average);
-        // 
+        //
         score.setScore(scores);
         // 저장하기
         docRef.update(SCORE, score);

@@ -49,7 +49,7 @@ public class MissionServiceImpl implements MissionService {
             averageScore = averageScore + (i+1) * missions.get(i).getScore();
         }
         averageScore = averageScore / 15;
-        averageScore = Math.round((averageScore*1000) / 1000.0);
+        averageScore = Double.parseDouble(String.format("%.3f",averageScore));
 
         return averageScore;
     }
