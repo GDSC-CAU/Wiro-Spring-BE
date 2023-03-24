@@ -78,6 +78,7 @@ public class FirebaseMissionRepository implements MissionRepository {
             scores.set(category - 1, average);
             // 저장하기
             Map<String, Object> docData = new HashMap<>();
+            docData.put("scores", scores);
             collection.document(id).set(docData);
         } else {
             Score score = document.toObject(Score.class);
@@ -90,7 +91,19 @@ public class FirebaseMissionRepository implements MissionRepository {
 
     @Override
     public MissionCompleteRes saveMissions(List<SuccessMission> missions, String userId) throws Exception {
-
-        return null;
+        String code = missions.get(0).getCode();
+        Firestore db = FirestoreClient.getFirestore();
+        String id = Character.toString(code.charAt(0));
+        String category = Character.toString(code.charAt(1));
+        CollectionReference collection = db.collection(USER_COLLECTION).document(userId).
+                collection(COLLECTION_NAME).document(id).collection(category);
+        for (int i = 0; i < missions.size(); i++) {
+            Map<String, Object> docData = new HashMap<>();
+            docData.put("code", missions.get(i).getCode());
+            docData.put("score", missions.get(i).getScore());
+            docData.put("updateTime", missions.get(i).getUpdateTime());
+            collection.document(missions.get(i).getCode()).set(docData);
+        }
+        return new MissionCompleteRes();
     }
 }
