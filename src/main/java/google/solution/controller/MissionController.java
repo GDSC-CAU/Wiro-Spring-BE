@@ -2,6 +2,7 @@ package google.solution.controller;
 
 
 import google.solution.dto.GetMissionInfoRes;
+import google.solution.dto.GetsuccessMissionsRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
 import google.solution.service.MissionService;
@@ -39,12 +40,12 @@ public class MissionController {
         }
     }
 
-    @GetMapping("/getMissions")
-    public BaseResponse<GetMissionsRes> getMissions(Authentication authentication) {
+    @GetMapping("/getSuccessMissions")
+    public BaseResponse<GetsuccessMissionsRes> getSuccessMissions(Authentication authentication) {
         try {
             String userId = authentication.getName();
-            GetMissionsRes getChatRoomsRes = missionService.getMissions(userId);
-            return new BaseResponse<>(getChatRoomsRes);
+            GetsuccessMissionsRes getsuccessMissionsRes = missionService.getSuccessMissions(userId);
+            return new BaseResponse<>(getsuccessMissionsRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
