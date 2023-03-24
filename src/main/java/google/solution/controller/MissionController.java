@@ -51,4 +51,15 @@ public class MissionController {
         }
     }
 
+    @GetMapping("/getCheckListHistory")
+    public BaseResponse<GetCheckListHistoryRes> getCheckListHistory(Authentication authentication) {
+        try {
+            String userId = authentication.getName();
+            GetCheckListHistoryRes getCheckListHistoryRes = missionService.getCheckListHistory(userId);
+            return new BaseResponse<>(getCheckListHistoryRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
 }
