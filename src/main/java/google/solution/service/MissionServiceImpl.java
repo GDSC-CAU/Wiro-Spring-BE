@@ -3,7 +3,7 @@ package google.solution.service;
 import google.solution.domain.Mission;
 import google.solution.domain.SuccessMission;
 import google.solution.dto.GetMissionInfoRes;
-import google.solution.dto.GetsuccessMissionsRes;
+import google.solution.dto.GetMissionHistoryRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
 import google.solution.repository.MissionRepository;
@@ -57,8 +57,8 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     @Transactional(readOnly = true)
-    public GetsuccessMissionsRes getMissionHistory(String userId) throws Exception {
-        GetsuccessMissionsRes getsuccessMissionsRes = missionRepository.getMissionHistory(userId);
-        return getsuccessMissionsRes;
+    public GetMissionHistoryRes getMissionHistory(String userId) throws Exception {
+        GetMissionHistoryRes getMissionHistoryRes = missionRepository.getMissionHistory(userId);
+        return getMissionHistoryRes;
     }
 }

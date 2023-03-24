@@ -22,8 +22,9 @@ import java.util.Map;
 public class FirebaseMissionRepository implements MissionRepository {
     public static final String COLLECTION_NAME = "mission";
     public static final String USER_COLLECTION = "user";
-    public static final String MISSION = "mission";
-    public static final String CHECK = "check";
+    public static final int CATEGORY_LENGTH = 7;
+    public static final String MISSION = "1";
+    public static final String CHECK = "2";
     public static final String SCORE = "score";
 
     @Override
@@ -106,4 +107,26 @@ public class FirebaseMissionRepository implements MissionRepository {
         }
         return new MissionCompleteRes();
     }
+
+    @Override
+    public GetMissionHistoryRes getMissionHistory(String userId) throws Exception {
+        List<SuccessMission> missionHistory = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference document = db.collection(USER_COLLECTION).document(userId).
+                collection(COLLECTION_NAME).document(MISSION);
+
+        for (int i = 0; i < CATEGORY_LENGTH; i++) {
+            CollectionReference collection = document.collection(Integer.toString(i + 1));
+            Query query = collection.orderBy("updateTime", Direction.DESCENDING).limit(1);
+            ApiFuture<QuerySnapshot> future = query.get();
+            List<QueryDocumentSnapshot> missions = future.get().getDocuments();
+
+            for (QueryDocumentSnapshot mission : missions) {
+                SuccessMission successMission = mission.toObject(SuccessMission.class);
+                missionHistory.add(successMission);
+            }
+        }
+        return new GetMissionHistoryRes(missionHistory);
+    }
+
 }

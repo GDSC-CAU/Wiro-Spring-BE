@@ -2,7 +2,7 @@ package google.solution.controller;
 
 
 import google.solution.dto.GetMissionInfoRes;
-import google.solution.dto.GetsuccessMissionsRes;
+import google.solution.dto.GetMissionHistoryRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
 import google.solution.service.MissionService;
@@ -40,12 +40,12 @@ public class MissionController {
         }
     }
 
-    @GetMapping("/getSuccessMissions")
-    public BaseResponse<GetsuccessMissionsRes> getSuccessMissions(Authentication authentication) {
+    @GetMapping("/getMissionHistory")
+    public BaseResponse<GetMissionHistoryRes> getMissionHistory(Authentication authentication) {
         try {
             String userId = authentication.getName();
-            GetsuccessMissionsRes getsuccessMissionsRes = missionService.getMissionHistory(userId);
-            return new BaseResponse<>(getsuccessMissionsRes);
+            GetMissionHistoryRes getMissionHistoryRes = missionService.getMissionHistory(userId);
+            return new BaseResponse<>(getMissionHistoryRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
