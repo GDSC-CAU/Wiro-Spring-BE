@@ -13,5 +13,5 @@ import java.util.List;
 @Setter
 public class Score {
 
-    private List<Double> score;
+    private List<Double> scores;
 }
