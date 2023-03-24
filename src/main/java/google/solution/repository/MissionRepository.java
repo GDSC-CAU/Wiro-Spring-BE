@@ -3,6 +3,7 @@ package google.solution.repository;
 import google.solution.domain.Mission;
 import google.solution.domain.SuccessMission;
 import google.solution.dto.GetMissionInfoRes;
+import google.solution.dto.GetsuccessMissionsRes;
 import google.solution.dto.MissionCompleteReq;
 import google.solution.dto.MissionCompleteRes;
 
@@ -14,4 +15,6 @@ public interface MissionRepository {
     public List<SuccessMission> getSuccessMissions(MissionCompleteReq missionCompleteReq, String userId) throws Exception;
     public void saveScore(String code, double score, String userId) throws Exception;
     public MissionCompleteRes saveMissions(List<SuccessMission> missions, String userId) throws Exception;
+    public GetsuccessMissionsRes getMissionHistory(String userId) throws Exception;
+
 }
