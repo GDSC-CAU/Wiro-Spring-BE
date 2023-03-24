@@ -2,10 +2,7 @@ package google.solution.service;
 
 import google.solution.domain.Mission;
 import google.solution.domain.SuccessMission;
-import google.solution.dto.GetMissionInfoRes;
-import google.solution.dto.GetMissionHistoryRes;
-import google.solution.dto.MissionCompleteReq;
-import google.solution.dto.MissionCompleteRes;
+import google.solution.dto.*;
 import google.solution.repository.MissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,4 +58,12 @@ public class MissionServiceImpl implements MissionService {
         GetMissionHistoryRes getMissionHistoryRes = missionRepository.getMissionHistory(userId);
         return getMissionHistoryRes;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetCheckListHistoryRes getCheckListHistory(String userId) throws Exception {
+        GetCheckListHistoryRes getCheckListHistoryRes = missionRepository.getCheckListHistory(userId);
+        return getCheckListHistoryRes;
+    }
+
 }
