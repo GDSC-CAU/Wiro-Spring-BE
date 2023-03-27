@@ -54,10 +54,10 @@ public class FireBaseUserRepository implements UserRepository{
     }
 
     @Override
-    public String saveUser(User user) throws Exception{
+    public String saveUser(String id, User user) throws Exception{
         Firestore firestore = FirestoreClient.getFirestore();
         ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture =
-                firestore.collection(COLLECTION_NAME).document(user.getUsername()).set(user);
+                firestore.collection(COLLECTION_NAME).document(id).set(user);
         return apiFuture.get().getUpdateTime().toString();
     }
 }

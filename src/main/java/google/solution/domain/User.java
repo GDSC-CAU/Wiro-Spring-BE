@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String medicine;
     private String id;
 
-    public User(String username, LoginReq loginReq) {
+    public User(LoginReq loginReq) {
         this.username = loginReq.getUsername();
         this.email = loginReq.getEmail();
         this.blood = loginReq.getBlood();

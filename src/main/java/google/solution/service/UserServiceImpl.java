@@ -48,11 +48,12 @@ public class UserServiceImpl implements UserService {
 
     // 등록 코드
     public User register(String uid, LoginReq loginReq) {
-        User user = new User(uid, loginReq);
+        String id = uid;
+        User user = new User(loginReq);
 
         // 등록
         try {
-            userRepository.saveUser(user);
+            userRepository.saveUser(id, user);
         } catch (Exception e) {
             e.printStackTrace();
         }
