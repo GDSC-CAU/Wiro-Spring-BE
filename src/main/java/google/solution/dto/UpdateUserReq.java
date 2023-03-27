@@ -10,4 +10,7 @@ public class UpdateUserReq {
 
     private String nickname;
     private String email;
+    private String blood;
+    private String disease;
+    private String medicine;
 }
