@@ -2,6 +2,7 @@ package google.solution.service;
 
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
+import google.solution.dto.LoginReq;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import google.solution.repository.UserRepository;
@@ -46,8 +47,8 @@ public class UserServiceImpl implements UserService {
     }
 
     // 등록 코드
-    public User register(String uid, String email, String nickname) {
-        User user = new User(uid, email, nickname);
+    public User register(String uid, LoginReq loginReq) {
+        User user = new User(uid, loginReq);
 
         // 등록
         try {
