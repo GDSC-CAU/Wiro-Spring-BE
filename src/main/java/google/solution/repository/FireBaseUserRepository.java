@@ -19,7 +19,7 @@ public class FireBaseUserRepository implements UserRepository{
 
     public static final String COLLECTION_NAME = "user";
     public static final String USER_EMAIL = "email";
-    public static final String USER_NICKNAME = "nickname";
+    public static final String USER_USERNAME = "username";
     public static final String USER_BLOOD = "blood";
     public static final String USER_DISEASE = "disease";
     public static final String USER_MEDICINE = "medicine";
@@ -46,7 +46,7 @@ public class FireBaseUserRepository implements UserRepository{
     public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(COLLECTION_NAME).document(id);
-        ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, updateUserReq.getEmail(), USER_NICKNAME, updateUserReq.getNickname(),
+        ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, updateUserReq.getEmail(), USER_USERNAME, updateUserReq.getUsername(),
                 USER_DISEASE, updateUserReq.getDisease(), USER_BLOOD, updateUserReq.getBlood(),
                 USER_MEDICINE, updateUserReq.getMedicine(), USER_ID, updateUserReq.getId());
         UpdateUserRes updateUserRes = new UpdateUserRes(future.get().getUpdateTime().toString());
