@@ -13,4 +13,5 @@ public class UpdateUserReq {
     private String blood;
     private String disease;
     private String medicine;
+    private String id;
 }
