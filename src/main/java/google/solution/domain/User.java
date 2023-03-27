@@ -16,6 +16,12 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String nickname;
+    private String blood;
+    private String disease;
+    private String medicine;
+    private String id;
+
+
 
     public User(String username, String email, String nickname) {
         this.username = username;
