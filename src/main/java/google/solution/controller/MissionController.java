@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mission")
@@ -61,11 +63,11 @@ public class MissionController {
     }
 
     @GetMapping("/getRecommendMission")
-    public BaseResponse<GetRecommendMissionRes> getRecommendMission(Authentication authentication) {
+    public BaseResponse<List<GetRecommendMissionRes>> getRecommendMission(Authentication authentication) {
         try {
             String userId = authentication.getName();
-            GetRecommendMissionRes getRecommendMission = missionService.getRecommendMission(userId);
-            return new BaseResponse<>(getRecommendMission);
+            List<GetRecommendMissionRes> getRecommendMissions = missionService.getRecommendMission(userId);
+            return new BaseResponse<>(getRecommendMissions);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }
