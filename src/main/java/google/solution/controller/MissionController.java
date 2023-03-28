@@ -60,4 +60,15 @@ public class MissionController {
         }
     }
 
+    @GetMapping("/getRecommendMission")
+    public BaseResponse<GetRecommendMissionRes> getRecommendMission(Authentication authentication) {
+        try {
+            String userId = authentication.getName();
+            GetRecommendMissionRes getRecommendMission = missionService.getRecommendMission(userId);
+            return new BaseResponse<>(getRecommendMission);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
 }
