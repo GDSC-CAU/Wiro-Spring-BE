@@ -2,10 +2,7 @@ package google.solution.controller;
 
 
 import google.solution.domain.Message;
-import google.solution.dto.GetChatContentRes;
-import google.solution.dto.GetChatMessageRes;
-import google.solution.dto.GetChatRoomRes;
-import google.solution.dto.SendMessageRes;
+import google.solution.dto.*;
 import google.solution.service.ChatService;
 import google.util.BaseResponse;
 import google.util.BaseResponseStatus;
@@ -23,7 +20,7 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/sendMessage")
-    public BaseResponse<SendMessageRes> sendMessage(@RequestBody Message message, Authentication authentication) {
+    public BaseResponse<SendMessageRes> sendMessage(@RequestBody SendMessageReq message, Authentication authentication) {
         try {
             String id = authentication.getName();
             SendMessageRes sendMessageRes = chatService.sendMessage(id, message);

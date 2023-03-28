@@ -5,10 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Message;
 import google.solution.domain.User;
-import google.solution.dto.GetChatContentRes;
-import google.solution.dto.GetChatMessageRes;
-import google.solution.dto.GetChatRoomRes;
-import google.solution.dto.SendMessageRes;
+import google.solution.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -19,23 +16,29 @@ import java.util.List;
 @Slf4j
 public class FireBaseChatRepository implements ChatRepository {
 
-    public static final String COLLECTION_NAME = "user";
+    public static final String USER = "user";
+    public static final String COLLECTION_NAME = "chat";
     public static final String NICKNAME_FIELD = "nickname";
+    public static final boolean TRUE = true;
+    public static final boolean FALSE = false;
 
     @Override
-    public SendMessageRes sendMessage(String id, Message message) throws Exception {
+    public SendMessageRes sendMessage(String id, SendMessageReq message) throws Exception {
         String destinationId = findUserIdByNickname(message.getDestinationNickname());
+        String sourceNickname = findNicknameByUserId(id);
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference sourceIdCollectionRef = db.collection(COLLECTION_NAME).document(id).collection(message.getDestinationNickname());
-        sourceIdCollectionRef.add(message);
-        CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(message.getSourceNickname());
-        destinationIdCollectionRef.add(message);
+        Message sendMessage = Message.sendMessageReqToMessage(sourceNickname, message, TRUE);
+        sourceIdCollectionRef.add(sendMessage);
+        CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(sourceNickname);
+        Message receiveMessage = Message.sendMessageReqToMessage(sourceNickname, message, FALSE);
+        destinationIdCollectionRef.add(receiveMessage);
         return new SendMessageRes();
     }
 
     private String findUserIdByNickname(String nickname) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
-        Query query = db.collection(COLLECTION_NAME).whereEqualTo(NICKNAME_FIELD, nickname);
+        Query query = db.collection(USER).whereEqualTo(NICKNAME_FIELD, nickname);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> users = future.get().getDocuments();
         return users.get(0).getId();
@@ -44,7 +47,7 @@ public class FireBaseChatRepository implements ChatRepository {
     private String findNicknameByUserId(String id) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference documentReference =
-                db.collection(COLLECTION_NAME).document(id);
+                db.collection(USER).document(id);
         ApiFuture<DocumentSnapshot> apiFuture = documentReference.get();
         DocumentSnapshot documentSnapshot = apiFuture.get();
         User user = null;
