@@ -177,4 +177,16 @@ public class FirebaseMissionRepository implements MissionRepository {
         }
     }
 
+    @Override
+    public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception {
+        ArrayList<GetRecommendMissionRes> recommendMissions = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_MISSION).listDocuments();
+        for (DocumentReference documentReference : documentReferences) {
+            GetRecommendMissionRes recommendMission = documentReference.get().get().toObject(GetRecommendMissionRes.class);
+            recommendMissions.add(recommendMission);
+        }
+        return recommendMissions;
+    }
+
 }
