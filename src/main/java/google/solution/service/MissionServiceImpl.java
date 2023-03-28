@@ -76,4 +76,11 @@ public class MissionServiceImpl implements MissionService {
         return recommendMissions;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception {
+        List<GetRecommendChecklistRes> recommendChecklists = missionRepository.getRecommendChecklist(userId);
+        return recommendChecklists;
+    }
+
 }
