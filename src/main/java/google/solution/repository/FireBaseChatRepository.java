@@ -19,6 +19,8 @@ public class FireBaseChatRepository implements ChatRepository {
     public static final String USER = "user";
     public static final String COLLECTION_NAME = "chat";
     public static final String NICKNAME_FIELD = "nickname";
+    public static final boolean TRUE = true;
+    public static final boolean FALSE = false;
 
     @Override
     public SendMessageRes sendMessage(String id, SendMessageReq message) throws Exception {
@@ -26,9 +28,11 @@ public class FireBaseChatRepository implements ChatRepository {
         String sourceNickname = findNicknameByUserId(id);
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference sourceIdCollectionRef = db.collection(COLLECTION_NAME).document(id).collection(message.getDestinationNickname());
-        sourceIdCollectionRef.add(message);
+        Message sendMessage = Message.sendMessageReqToMessage(sourceNickname, message, TRUE);
+        sourceIdCollectionRef.add(sendMessage);
         CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(sourceNickname);
-        destinationIdCollectionRef.add(message);
+        Message receiveMessage = Message.sendMessageReqToMessage(sourceNickname, message, FALSE);
+        destinationIdCollectionRef.add(receiveMessage);
         return new SendMessageRes();
     }
 
