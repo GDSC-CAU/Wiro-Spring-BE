@@ -2,10 +2,7 @@ package google.solution.repository;
 
 import google.solution.domain.Mission;
 import google.solution.domain.SuccessMission;
-import google.solution.dto.GetCheckListHistoryRes;
-import google.solution.dto.GetMissionHistoryRes;
-import google.solution.dto.MissionCompleteReq;
-import google.solution.dto.MissionCompleteRes;
+import google.solution.dto.*;
 
 import java.util.List;
 
@@ -18,5 +15,4 @@ public interface MissionRepository {
     public GetMissionHistoryRes getMissionHistory(String userId) throws Exception;
     public GetCheckListHistoryRes getCheckListHistory(String userId) throws Exception;
     public void deleteRecommendMission(String id, String code) throws Exception;
-
-}
+    public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception;
