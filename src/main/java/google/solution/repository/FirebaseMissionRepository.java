@@ -22,13 +22,15 @@ import java.util.Map;
 public class FirebaseMissionRepository implements MissionRepository {
     public static final String COLLECTION_NAME = "mission";
     public static final String USER_COLLECTION = "user";
+    public static final String RECOMMEND_MISSION = "recommend_mission";
+    public static final String RECOMMEND_CHECKLIST = "recommend_checklist";
     public static final int CATEGORY_LENGTH = 7;
     public static final String MISSION = "1";
     public static final String CHECKLIST = "2";
     public static final String SCORE = "score";
 
     @Override
-    public Mission getMissionInfo(String code) throws Exception {
+    public Mission getMissionInfo(String userId, String code) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         String id = Character.toString(code.charAt(0));
         String category = Character.toString(code.charAt(1));
@@ -38,10 +40,22 @@ public class FirebaseMissionRepository implements MissionRepository {
         Mission mission = null;
         if(documentSnapshot.exists()){
             mission = documentSnapshot.toObject(Mission.class);
+            saveRecommendMission(userId, code, mission);
             return mission;
         }
         else{
             return null;
+        }
+    }
+
+    private void saveRecommendMission(String id, String code, Mission mission) {
+        Firestore db = FirestoreClient.getFirestore();
+        String category = Character.toString(code.charAt(1));
+        if (category.equals(MISSION)) {
+            db.collection(USER_COLLECTION).document(id).collection(RECOMMEND_MISSION).document(code).set(mission);
+
+        } else {
+            db.collection(USER_COLLECTION).document(id).collection(RECOMMEND_CHECKLIST).document(code).set(mission);
         }
     }
 

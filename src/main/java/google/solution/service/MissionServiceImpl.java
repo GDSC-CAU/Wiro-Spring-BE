@@ -19,8 +19,8 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     @Transactional(readOnly = true)
-    public GetMissionInfoRes getMissionInfo(String code) throws Exception {
-        Mission mission = missionRepository.getMissionInfo(code);
+    public GetMissionInfoRes getMissionInfo(String id, String code) throws Exception {
+        Mission mission = missionRepository.getMissionInfo(id, code);
         GetMissionInfoRes getMissionInfoRes = GetMissionInfoRes.missionToGetMissionInfoRes(mission);
         return getMissionInfoRes;
     }
