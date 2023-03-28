@@ -73,4 +73,15 @@ public class MissionController {
         }
     }
 
+    @GetMapping("/getRecommendChecklist")
+    public BaseResponse<List<GetRecommendChecklistRes>> getRecommendChecklist(Authentication authentication) {
+        try {
+            String userId = authentication.getName();
+            List<GetRecommendChecklistRes> recommendChecklists = missionService.getRecommendChecklist(userId);
+            return new BaseResponse<>(recommendChecklists);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
 }
