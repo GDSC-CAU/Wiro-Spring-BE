@@ -23,4 +23,5 @@ public interface MissionRepository {
     public void deleteRecommendMission(String id, String code) throws Exception;
 
     public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception;
+    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception;
 }
