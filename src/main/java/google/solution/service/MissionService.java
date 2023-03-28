@@ -11,4 +11,5 @@ public interface MissionService {
     public GetMissionHistoryRes getMissionHistory(String userId) throws Exception;
     public GetCheckListHistoryRes getCheckListHistory(String userId) throws Exception;
     public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception;
+    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception;
 }
