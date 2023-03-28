@@ -11,5 +11,5 @@ public interface UserRepository {
 
     public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception;
 
-    public String saveUser(String id, User user) throws Exception;
+    public String saveUser(User user) throws Exception;
 }

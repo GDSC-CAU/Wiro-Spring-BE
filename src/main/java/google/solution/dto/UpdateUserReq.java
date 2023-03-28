@@ -8,10 +8,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateUserReq {
 
-    private String username;
+    private String nickname;
     private String email;
-    private String blood;
-    private String disease;
-    private String medicine;
-    private String id;
 }

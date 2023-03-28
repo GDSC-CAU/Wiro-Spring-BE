@@ -13,6 +13,6 @@ public interface UserService extends UserDetailsService {
 
     public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception;
 
-    public User register(String uid, LoginReq loginReq);
+    public User register(String uid, String email, String nickname);
 
 }

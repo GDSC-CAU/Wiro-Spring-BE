@@ -1,7 +1,5 @@
 package google.solution.domain;
 
-import google.solution.dto.LoginReq;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,25 +9,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class User implements UserDetails {
 
     private String username;
     private String email;
-    private String blood;
-    private String disease;
-    private String medicine;
-    private String id;
+    private String nickname;
 
-    public User(LoginReq loginReq) {
-        this.username = loginReq.getUsername();
-        this.email = loginReq.getEmail();
-        this.blood = loginReq.getBlood();
-        this.disease = loginReq.getDisease();
-        this.medicine = loginReq.getMedicine();
-        this.id = loginReq.getId();
+    public User(String username, String email, String nickname) {
+        this.username = username;
+        this.email = email;
+        this.nickname = nickname;
     }
 
     @Override

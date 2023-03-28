@@ -12,9 +12,11 @@ import google.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,29 +50,31 @@ public class UserController {
 
     @PostMapping("/login")
     public BaseResponse<LoginRes> register(@RequestHeader("Authorization") String authorization,
-                             @RequestBody LoginReq loginReq) {
+                                           @RequestBody LoginReq loginReq) {
         // TOKEN을 가져온다.
-        FirebaseToken decodedToken;
+//        FirebaseToken decodedToken;
         try {
-            String token = RequestUtil.getAuthorizationToken(authorization);
-            decodedToken = firebaseAuth.verifyIdToken(token);
-        } catch (IllegalArgumentException | FirebaseAuthException e) {
+//            String token = RequestUtil.getAuthorizationToken(authorization);
+//            decodedToken = firebaseAuth.verifyIdToken(token);
+        } catch (IllegalArgumentException e) {
+//        } catch (IllegalArgumentException | FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
         }
         // 사용자가 있다면 기존 정보 리턴
-        User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
+//        User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
+        User user = ((User) userService.loadUserByUsername("1asdasdwqdasdsa"));
         if (user != null) {
             LoginRes loginRes = new LoginRes(user);
             return new BaseResponse<>(loginRes);
         }
         // 사용자를 등록한다.
+//        User registeredUser = userService.register(
+//                decodedToken.getUid(), decodedToken.getEmail(), loginReq.getNickname());
         User registeredUser = userService.register(
-                decodedToken.getUid(), loginReq);
+                "1asdasdwqdasdsa", "sadadsd@naver.com", loginReq.getNickname());
         LoginRes loginRes = new LoginRes(registeredUser);
         return new BaseResponse<>(loginRes);
     }
-
-
 
 }
