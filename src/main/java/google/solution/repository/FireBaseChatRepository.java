@@ -25,10 +25,11 @@ public class FireBaseChatRepository implements ChatRepository {
     @Override
     public SendMessageRes sendMessage(String id, Message message) throws Exception {
         String destinationId = findUserIdByNickname(message.getDestinationNickname());
+        String sourceNickname = findNicknameByUserId(id);
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference sourceIdCollectionRef = db.collection(COLLECTION_NAME).document(id).collection(message.getDestinationNickname());
         sourceIdCollectionRef.add(message);
-        CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(message.getSourceNickname());
+        CollectionReference destinationIdCollectionRef = db.collection(COLLECTION_NAME).document(destinationId).collection(sourceNickname);
         destinationIdCollectionRef.add(message);
         return new SendMessageRes();
     }
