@@ -8,8 +8,6 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class Message {
 
     private String sourceNickname;
@@ -24,8 +22,48 @@ public class Message {
         message.setContent(sendMessageReq.getContent());
         message.setDestinationNickname(sendMessageReq.getDestinationNickname());
         message.setUpdateTime(sendMessageReq.getUpdateTime());
-        message.setFromMe(isFromMe);
+        message.setIsFromMe(isFromMe);
         return message;
+    }
+
+    public String getSourceNickname() {
+        return sourceNickname;
+    }
+
+    public void setSourceNickname(String sourceNickname) {
+        this.sourceNickname = sourceNickname;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getDestinationNickname() {
+        return destinationNickname;
+    }
+
+    public void setDestinationNickname(String destinationNickname) {
+        this.destinationNickname = destinationNickname;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public boolean getIsFromMe() {
+        return isFromMe;
+    }
+
+    public void setIsFromMe(boolean isFromMe) {
+        this.isFromMe = isFromMe;
     }
 }
 
