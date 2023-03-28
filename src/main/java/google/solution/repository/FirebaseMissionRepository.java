@@ -40,7 +40,8 @@ public class FirebaseMissionRepository implements MissionRepository {
         Mission mission = null;
         if(documentSnapshot.exists()){
             mission = documentSnapshot.toObject(Mission.class);
-            saveRecommendMission(userId, code, mission);
+            SaveRecommendMissionReq recommendMission = SaveRecommendMissionReq.createSaveRecommendMissionReq(code, mission.getContent());
+            saveRecommendMission(userId, code, recommendMission);
             return mission;
         }
         else{
@@ -48,7 +49,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         }
     }
 
-    private void saveRecommendMission(String id, String code, Mission mission) {
+    private void saveRecommendMission(String id, String code, SaveRecommendMissionReq mission) {
         Firestore db = FirestoreClient.getFirestore();
         String type = Character.toString(code.charAt(0));
         if (type.equals(MISSION)) {
