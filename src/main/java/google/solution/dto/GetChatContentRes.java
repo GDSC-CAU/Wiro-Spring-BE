@@ -1,5 +1,6 @@
 package google.solution.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import google.solution.domain.Message;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,12 +18,17 @@ public class GetChatContentRes {
     private String destinationNickname;
     private String updateTime;
 
+    @JsonProperty("isFromMe")
+    private boolean isFromMe;
+
     public static GetChatContentRes messageToGetChatContentRes(Message message) {
         GetChatContentRes getChatContentRes = new GetChatContentRes();
         getChatContentRes.setSourceNickname(message.getSourceNickname());
         getChatContentRes.setContent(message.getContent());
         getChatContentRes.setDestinationNickname(message.getDestinationNickname());
         getChatContentRes.setUpdateTime(message.getUpdateTime());
+        getChatContentRes.setFromMe(message.getIsFromMe());
         return getChatContentRes;
     }
+
 }
