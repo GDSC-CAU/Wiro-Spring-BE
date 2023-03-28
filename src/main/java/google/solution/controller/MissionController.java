@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mission")
@@ -17,9 +19,10 @@ public class MissionController {
     private final MissionService missionService;
 
     @GetMapping("/getMissionInfo/{code}")
-    public BaseResponse<GetMissionInfoRes> getMissionHistory(@PathVariable String code) {
+    public BaseResponse<GetMissionInfoRes> getMissionHistory(@PathVariable String code, Authentication authentication) {
         try {
-            GetMissionInfoRes getChatRoomsRes = missionService.getMissionInfo(code);
+            String id = authentication.getName();
+            GetMissionInfoRes getChatRoomsRes = missionService.getMissionInfo(id, code);
             return new BaseResponse<>(getChatRoomsRes);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
@@ -54,6 +57,28 @@ public class MissionController {
             String userId = authentication.getName();
             GetCheckListHistoryRes getCheckListHistoryRes = missionService.getCheckListHistory(userId);
             return new BaseResponse<>(getCheckListHistoryRes);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
+    @GetMapping("/getRecommendMission")
+    public BaseResponse<List<GetRecommendMissionRes>> getRecommendMission(Authentication authentication) {
+        try {
+            String userId = authentication.getName();
+            List<GetRecommendMissionRes> getRecommendMissions = missionService.getRecommendMission(userId);
+            return new BaseResponse<>(getRecommendMissions);
+        } catch (Exception e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL);
+        }
+    }
+
+    @GetMapping("/getRecommendChecklist")
+    public BaseResponse<List<GetRecommendChecklistRes>> getRecommendChecklist(Authentication authentication) {
+        try {
+            String userId = authentication.getName();
+            List<GetRecommendChecklistRes> recommendChecklists = missionService.getRecommendChecklist(userId);
+            return new BaseResponse<>(recommendChecklists);
         } catch (Exception e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL);
         }

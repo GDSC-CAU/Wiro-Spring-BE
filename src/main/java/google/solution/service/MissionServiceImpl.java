@@ -19,8 +19,8 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     @Transactional(readOnly = true)
-    public GetMissionInfoRes getMissionInfo(String code) throws Exception {
-        Mission mission = missionRepository.getMissionInfo(code);
+    public GetMissionInfoRes getMissionInfo(String id, String code) throws Exception {
+        Mission mission = missionRepository.getMissionInfo(id, code);
         GetMissionInfoRes getMissionInfoRes = GetMissionInfoRes.missionToGetMissionInfoRes(mission);
         return getMissionInfoRes;
     }
@@ -28,15 +28,18 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
         List<SuccessMission> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
+        String code = missionCompleteReq.getCode();
         if (missions.size() >= 4) {
             missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             double averageScore  = calculateWeightedAverage(missions);
-            missionRepository.saveScore(missionCompleteReq.getCode(), averageScore, userId);
+            missionRepository.saveScore(code, averageScore, userId);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions, userId);
+            missionRepository.deleteRecommendMission(userId, code);
             return missionCompleteRes;
         } else {
             missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions,userId);
+            missionRepository.deleteRecommendMission(userId, code);
             return missionCompleteRes;
         }
     }
@@ -64,6 +67,20 @@ public class MissionServiceImpl implements MissionService {
     public GetCheckListHistoryRes getCheckListHistory(String userId) throws Exception {
         GetCheckListHistoryRes getCheckListHistoryRes = missionRepository.getCheckListHistory(userId);
         return getCheckListHistoryRes;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception {
+        List<GetRecommendMissionRes> recommendMissions = missionRepository.getRecommendMission(userId);
+        return recommendMissions;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception {
+        List<GetRecommendChecklistRes> recommendChecklists = missionRepository.getRecommendChecklist(userId);
+        return recommendChecklists;
     }
 
 }
