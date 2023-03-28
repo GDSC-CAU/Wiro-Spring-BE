@@ -17,6 +17,6 @@ public interface MissionRepository {
     public MissionCompleteRes saveMissions(List<SuccessMission> missions, String userId) throws Exception;
     public GetMissionHistoryRes getMissionHistory(String userId) throws Exception;
     public GetCheckListHistoryRes getCheckListHistory(String userId) throws Exception;
-    public void deleteRecommendMission(String code) throws Exception;
+    public void deleteRecommendMission(String id, String code) throws Exception;
 
 }

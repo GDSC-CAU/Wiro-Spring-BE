@@ -164,5 +164,16 @@ public class FirebaseMissionRepository implements MissionRepository {
         return new GetCheckListHistoryRes(checkListHistory);
     }
 
+    @Override
+    public void deleteRecommendMission(String id, String code) throws Exception {
+        Firestore db = FirestoreClient.getFirestore();
+        String type = Character.toString(code.charAt(0));
+        if (type.equals(MISSION)) {
+            db.collection(USER_COLLECTION).document(id).collection(RECOMMEND_MISSION).document(code).delete();
+
+        } else {
+            db.collection(USER_COLLECTION).document(id).collection(RECOMMEND_CHECKLIST).document(code).delete();
+        }
+    }
 
 }
