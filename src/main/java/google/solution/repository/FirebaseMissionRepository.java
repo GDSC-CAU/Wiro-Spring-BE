@@ -189,4 +189,16 @@ public class FirebaseMissionRepository implements MissionRepository {
         return recommendMissions;
     }
 
+    @Override
+    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception {
+        ArrayList<GetRecommendChecklistRes> recommendChecklists = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_CHECKLIST).listDocuments();
+        for (DocumentReference documentReference : documentReferences) {
+            GetRecommendChecklistRes recommendChecklist = documentReference.get().get().toObject(GetRecommendChecklistRes.class);
+            recommendChecklists.add(recommendChecklist);
+        }
+        return recommendChecklists;
+    }
+
 }
