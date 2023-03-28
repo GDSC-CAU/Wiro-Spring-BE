@@ -5,10 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Message;
 import google.solution.domain.User;
-import google.solution.dto.GetChatContentRes;
-import google.solution.dto.GetChatMessageRes;
-import google.solution.dto.GetChatRoomRes;
-import google.solution.dto.SendMessageRes;
+import google.solution.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +20,7 @@ public class FireBaseChatRepository implements ChatRepository {
     public static final String NICKNAME_FIELD = "nickname";
 
     @Override
-    public SendMessageRes sendMessage(String id, Message message) throws Exception {
+    public SendMessageRes sendMessage(String id, SendMessageReq message) throws Exception {
         String destinationId = findUserIdByNickname(message.getDestinationNickname());
         String sourceNickname = findNicknameByUserId(id);
         Firestore db = FirestoreClient.getFirestore();
