@@ -50,8 +50,8 @@ public class FirebaseMissionRepository implements MissionRepository {
 
     private void saveRecommendMission(String id, String code, Mission mission) {
         Firestore db = FirestoreClient.getFirestore();
-        String category = Character.toString(code.charAt(1));
-        if (category.equals(MISSION)) {
+        String type = Character.toString(code.charAt(0));
+        if (type.equals(MISSION)) {
             db.collection(USER_COLLECTION).document(id).collection(RECOMMEND_MISSION).document(code).set(mission);
 
         } else {
