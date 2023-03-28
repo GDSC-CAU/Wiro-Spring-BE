@@ -16,7 +16,8 @@ import java.util.List;
 @Slf4j
 public class FireBaseChatRepository implements ChatRepository {
 
-    public static final String COLLECTION_NAME = "user";
+    public static final String USER = "user";
+    public static final String COLLECTION_NAME = "chat";
     public static final String NICKNAME_FIELD = "nickname";
 
     @Override
@@ -33,7 +34,7 @@ public class FireBaseChatRepository implements ChatRepository {
 
     private String findUserIdByNickname(String nickname) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
-        Query query = db.collection(COLLECTION_NAME).whereEqualTo(NICKNAME_FIELD, nickname);
+        Query query = db.collection(USER).whereEqualTo(NICKNAME_FIELD, nickname);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> users = future.get().getDocuments();
         return users.get(0).getId();
@@ -42,7 +43,7 @@ public class FireBaseChatRepository implements ChatRepository {
     private String findNicknameByUserId(String id) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference documentReference =
-                db.collection(COLLECTION_NAME).document(id);
+                db.collection(USER).document(id);
         ApiFuture<DocumentSnapshot> apiFuture = documentReference.get();
         DocumentSnapshot documentSnapshot = apiFuture.get();
         User user = null;
