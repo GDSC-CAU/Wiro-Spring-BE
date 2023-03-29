@@ -13,6 +13,9 @@ import google.solution.dto.UpdateUserRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Repository
 @Slf4j
 public class FireBaseUserRepository implements UserRepository{
@@ -46,10 +49,23 @@ public class FireBaseUserRepository implements UserRepository{
     public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(COLLECTION_NAME).document(id);
-
-        ApiFuture<WriteResult> future = docRef.update(USER_NICKNAME, updateUserReq.getNickname(), USER_BLOOD, updateUserReq.getBlood(),
-                USER_DISEASE, updateUserReq.getDisease(), USER_ID, updateUserReq.getId(),
-                USER_MEDICINE,updateUserReq.getMedicine());
+        Map<String, Object> docData = new HashMap<>();
+        if (updateUserReq.getNickname() != null) {
+            docData.put(USER_NICKNAME, updateUserReq.getNickname());
+        }
+        if (updateUserReq.getId() != null) {
+            docData.put(USER_ID, updateUserReq.getId());
+        }
+        if (updateUserReq.getDisease() != null) {
+            docData.put(USER_DISEASE, updateUserReq.getDisease());
+        }
+        if (updateUserReq.getBlood() != null) {
+            docData.put(USER_BLOOD, updateUserReq.getBlood());
+        }
+        if (updateUserReq.getMedicine() != null) {
+            docData.put(USER_MEDICINE, updateUserReq.getMedicine());
+        }
+        ApiFuture<WriteResult> future = docRef.update(docData);
         UpdateUserRes updateUserRes = new UpdateUserRes(future.get().getUpdateTime().toString());
         return updateUserRes;
     }
