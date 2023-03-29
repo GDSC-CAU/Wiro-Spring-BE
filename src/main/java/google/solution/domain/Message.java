@@ -14,9 +14,9 @@ public class Message {
     private String content;
     private String destinationNickname;
     private String updateTime;
-    private boolean isFromMe;
+    private int isFromMe;
 
-    public static Message sendMessageReqToMessage(String sourceNickname, SendMessageReq sendMessageReq, boolean isFromMe) {
+    public static Message sendMessageReqToMessage(String sourceNickname, SendMessageReq sendMessageReq, int isFromMe) {
         Message message = new Message();
         message.setSourceNickname(sourceNickname);
         message.setContent(sendMessageReq.getContent());
@@ -58,11 +58,11 @@ public class Message {
         this.updateTime = updateTime;
     }
 
-    public boolean getIsFromMe() {
+    public int getIsFromMe() {
         return isFromMe;
     }
 
-    public void setIsFromMe(boolean isFromMe) {
+    public void setIsFromMe(int isFromMe) {
         this.isFromMe = isFromMe;
     }
 }

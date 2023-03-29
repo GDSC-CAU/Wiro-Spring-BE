@@ -19,8 +19,8 @@ public class FireBaseChatRepository implements ChatRepository {
     public static final String USER = "user";
     public static final String COLLECTION_NAME = "chat";
     public static final String NICKNAME_FIELD = "nickname";
-    public static final boolean TRUE = true;
-    public static final boolean FALSE = false;
+    public static final int TRUE = 1;
+    public static final int FALSE = 0;
 
     @Override
     public SendMessageRes sendMessage(String id, SendMessageReq message) throws Exception {
