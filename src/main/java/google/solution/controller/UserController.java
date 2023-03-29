@@ -63,7 +63,7 @@ public class UserController {
         }
         // 사용자가 있다면 기존 정보 리턴
         //User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
-        User user = ((User) userService.loadUserByUsername("7eKBEziQnHXBeJlNpX8GltmggA13");
+        User user = ((User) userService.loadUserByUsername("7eKBEziQnHXBeJlNpX8GltmggA13"));
         if (user != null) {
             LoginRes loginRes = new LoginRes(user);
             return new BaseResponse<>(loginRes);
