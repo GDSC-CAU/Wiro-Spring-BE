@@ -68,7 +68,7 @@ public class UserController {
         }
         // 사용자를 등록한다.
         User registeredUser = userService.register(
-                decodedToken.getUid(), decodedToken.getEmail(), loginReq.getNickname());
+                decodedToken.getUid(), decodedToken.getEmail(), loginReq);
         LoginRes loginRes = new LoginRes(registeredUser);
         return new BaseResponse<>(loginRes);
     }
