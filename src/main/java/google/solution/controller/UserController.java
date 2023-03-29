@@ -52,23 +52,27 @@ public class UserController {
     public BaseResponse<LoginRes> register(@RequestHeader("Authorization") String authorization,
                                            @RequestBody LoginReq loginReq) {
         // TOKEN을 가져온다.
-        FirebaseToken decodedToken;
+        //FirebaseToken decodedToken;
         try {
-            String token = RequestUtil.getAuthorizationToken(authorization);
-            decodedToken = firebaseAuth.verifyIdToken(token);
-        } catch (IllegalArgumentException | FirebaseAuthException e) {
+            //String token = RequestUtil.getAuthorizationToken(authorization);
+            //decodedToken = firebaseAuth.verifyIdToken(token);
+        //} catch (IllegalArgumentException | FirebaseAuthException e) {
+        } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
         }
         // 사용자가 있다면 기존 정보 리턴
-        User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
+        //User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
+        User user = ((User) userService.loadUserByUsername("7eKBEziQnHXBeJlNpX8GltmggA13"));
         if (user != null) {
             LoginRes loginRes = new LoginRes(user);
             return new BaseResponse<>(loginRes);
         }
         // 사용자를 등록한다.
+        //User registeredUser = userService.register(
+                //decodedToken.getUid(), decodedToken.getEmail(), loginReq);
         User registeredUser = userService.register(
-                decodedToken.getUid(), decodedToken.getEmail(), loginReq.getNickname());
+                "7eKBEziQnHXBeJlNpX8GltmggA13", "ssss@naver.com", loginReq);
         LoginRes loginRes = new LoginRes(registeredUser);
         return new BaseResponse<>(loginRes);
     }

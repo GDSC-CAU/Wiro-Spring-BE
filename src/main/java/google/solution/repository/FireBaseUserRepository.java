@@ -13,13 +13,20 @@ import google.solution.dto.UpdateUserRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Repository
 @Slf4j
 public class FireBaseUserRepository implements UserRepository{
 
     public static final String COLLECTION_NAME = "user";
-    public static final String USER_EMAIL = "email";
     public static final String USER_NICKNAME = "nickname";
+    public static final String USER_BLOOD = "blood";
+    public static final String USER_DISEASE = "disease";
+    public static final String USER_ID = "id";
+    public static final String USER_MEDICINE = "medicine";
+
 
     @Override
     public User getUser(String id) throws Exception {
@@ -42,7 +49,23 @@ public class FireBaseUserRepository implements UserRepository{
     public UpdateUserRes updateUser(String id, UpdateUserReq updateUserReq) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(COLLECTION_NAME).document(id);
-        ApiFuture<WriteResult> future = docRef.update(USER_EMAIL, updateUserReq.getEmail(), USER_NICKNAME, updateUserReq.getNickname());
+        Map<String, Object> docData = new HashMap<>();
+        if (updateUserReq.getNickname() != null) {
+            docData.put(USER_NICKNAME, updateUserReq.getNickname());
+        }
+        if (updateUserReq.getId() != null) {
+            docData.put(USER_ID, updateUserReq.getId());
+        }
+        if (updateUserReq.getDisease() != null) {
+            docData.put(USER_DISEASE, updateUserReq.getDisease());
+        }
+        if (updateUserReq.getBlood() != null) {
+            docData.put(USER_BLOOD, updateUserReq.getBlood());
+        }
+        if (updateUserReq.getMedicine() != null) {
+            docData.put(USER_MEDICINE, updateUserReq.getMedicine());
+        }
+        ApiFuture<WriteResult> future = docRef.update(docData);
         UpdateUserRes updateUserRes = new UpdateUserRes(future.get().getUpdateTime().toString());
         return updateUserRes;
     }
