@@ -9,7 +9,9 @@ import google.solution.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -19,14 +21,17 @@ public class FireBaseChatRepository implements ChatRepository {
     public static final String USER = "user";
     public static final String COLLECTION_NAME = "chat";
     public static final String NICKNAME_FIELD = "nickname";
-    public static final boolean TRUE = true;
-    public static final boolean FALSE = false;
+    public static final int TRUE = 1;
+    public static final int FALSE = 0;
 
     @Override
     public SendMessageRes sendMessage(String id, SendMessageReq message) throws Exception {
         String destinationId = findUserIdByNickname(message.getDestinationNickname());
         String sourceNickname = findNicknameByUserId(id);
         Firestore db = FirestoreClient.getFirestore();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        String nowDate = simpleDateFormat.format(new Date());
+        message.setUpdateTime(nowDate);
         CollectionReference sourceIdCollectionRef = db.collection(COLLECTION_NAME).document(id).collection(message.getDestinationNickname());
         Message sendMessage = Message.sendMessageReqToMessage(sourceNickname, message, TRUE);
         sourceIdCollectionRef.add(sendMessage);

@@ -17,8 +17,7 @@ public class GetChatMessageRes {
     private String content;
     private String destinationNickname;
     private String updateTime;
-    @JsonProperty("isFromMe")
-    private boolean isFromMe;
+    private int isFromMe;
 
     public static GetChatMessageRes messageToGetChatMessageRes(Message message) {
         GetChatMessageRes getChatMessageRes = new GetChatMessageRes();
@@ -26,7 +25,7 @@ public class GetChatMessageRes {
         getChatMessageRes.setContent(message.getContent());
         getChatMessageRes.setDestinationNickname(message.getDestinationNickname());
         getChatMessageRes.setUpdateTime(message.getUpdateTime());
-        getChatMessageRes.setFromMe(message.getIsFromMe());
+        getChatMessageRes.setIsFromMe(message.getIsFromMe());
         return getChatMessageRes;
     }
 }
