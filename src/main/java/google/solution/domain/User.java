@@ -22,10 +22,11 @@ public class User implements UserDetails {
     private String id;
     private String medicine;
 
-    public User(String username, String email, String nickname) {
+    public User(String username, String email, String nickname, String id) {
         this.username = username;
         this.email = email;
         this.nickname = nickname;
+        this.id = id;
     }
 
     public static User createUser(String username, String email, LoginReq userInformation) {
