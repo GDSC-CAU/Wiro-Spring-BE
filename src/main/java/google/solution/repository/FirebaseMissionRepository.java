@@ -67,7 +67,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         String category = Character.toString(missionCompleteReq.getCode().charAt(1));
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference missionCategory = db.collection(USER_COLLECTION).document(userId).collection(COLLECTION_NAME).document(id).collection(category);
-        Query query = missionCategory.orderBy("updateTime", Direction.DESCENDING).limit(4);
+        Query query = missionCategory.orderBy("updateTime", Direction.DESCENDING).limit(5);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> missions = future.get().getDocuments();
         for (QueryDocumentSnapshot mission : missions) {

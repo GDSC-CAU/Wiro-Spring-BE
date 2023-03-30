@@ -29,7 +29,7 @@ public class MissionServiceImpl implements MissionService {
     public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
         List<SuccessMission> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
         String code = missionCompleteReq.getCode();
-        if (missions.size() >= 4) {
+        if (missions.size() >= 5) {
             missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             double averageScore  = calculateWeightedAverage(missions);
             missionRepository.saveScore(code, averageScore, userId);
