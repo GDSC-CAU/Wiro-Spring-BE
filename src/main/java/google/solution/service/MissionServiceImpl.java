@@ -32,7 +32,7 @@ public class MissionServiceImpl implements MissionService {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
         String nowDate = simpleDateFormat.format(new Date());
         missionCompleteReq.setUpdateTime(nowDate);
-        missionRepository.saveOneMission(missionCompleteReq);
+        missionRepository.saveOneMission(missionCompleteReq, userId);
         List<SuccessMission> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
         String code = missionCompleteReq.getCode();
         if (missions.size() >= 5) {

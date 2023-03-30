@@ -124,6 +124,17 @@ public class FirebaseMissionRepository implements MissionRepository {
     }
 
     @Override
+    public void saveOneMission(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
+        String code = missionCompleteReq.getCode();
+        Firestore db = FirestoreClient.getFirestore();
+        String id = Character.toString(code.charAt(0));
+        String category = Character.toString(code.charAt(1));
+        CollectionReference collection = db.collection(USER_COLLECTION).document(userId).
+                collection(COLLECTION_NAME).document(id).collection(category);
+        collection.document(code).set(missionCompleteReq);
+    }
+
+    @Override
     public GetMissionHistoryRes getMissionHistory(String userId) throws Exception {
         List<SuccessMission> missionHistory = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
