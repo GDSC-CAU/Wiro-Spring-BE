@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,20 +29,18 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public MissionCompleteRes missionComplete(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        String nowDate = simpleDateFormat.format(new Date());
+        missionCompleteReq.setUpdateTime(nowDate);
+        missionRepository.saveOneMission(missionCompleteReq);
         List<SuccessMission> missions = missionRepository.getSuccessMissions(missionCompleteReq, userId);
         String code = missionCompleteReq.getCode();
         if (missions.size() >= 5) {
-            missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             double averageScore  = calculateWeightedAverage(missions);
             missionRepository.saveScore(code, averageScore, userId);
-            MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions, userId);
-//            missionRepository.deleteRecommendMission(userId, code);
-            return missionCompleteRes;
+            return new MissionCompleteRes();
         } else {
-            missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
-            MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions,userId);
-//            missionRepository.deleteRecommendMission(userId, code);
-            return missionCompleteRes;
+            return new MissionCompleteRes();
         }
     }
 
