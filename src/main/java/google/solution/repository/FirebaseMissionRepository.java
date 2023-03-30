@@ -195,6 +195,9 @@ public class FirebaseMissionRepository implements MissionRepository {
         Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_MISSION).listDocuments();
         for (DocumentReference documentReference : documentReferences) {
             GetRecommendMissionRes recommendMission = documentReference.get().get().toObject(GetRecommendMissionRes.class);
+            if (recommendMission.getCode().equals("-1")) {
+                continue;
+            }
             recommendMissions.add(recommendMission);
         }
         return recommendMissions;
@@ -207,6 +210,9 @@ public class FirebaseMissionRepository implements MissionRepository {
         Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_CHECKLIST).listDocuments();
         for (DocumentReference documentReference : documentReferences) {
             GetRecommendChecklistRes recommendChecklist = documentReference.get().get().toObject(GetRecommendChecklistRes.class);
+            if (recommendChecklist.getCode().equals("-1")) {
+                continue;
+            }
             recommendChecklists.add(recommendChecklist);
         }
         return recommendChecklists;

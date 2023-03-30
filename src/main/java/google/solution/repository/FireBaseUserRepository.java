@@ -1,10 +1,7 @@
 package google.solution.repository;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.User;
 import google.solution.dto.GetUserRes;
@@ -26,6 +23,10 @@ public class FireBaseUserRepository implements UserRepository{
     public static final String USER_DISEASE = "disease";
     public static final String USER_ID = "id";
     public static final String USER_MEDICINE = "medicine";
+    public static final String RECOMMEND_MISSION = "recommend_mission";
+    public static final String RECOMMEND_CHECKLIST = "recommend_checklist";
+    public static final String CODE = "code";
+    public static final String CONTENT = "content";
 
 
     @Override
@@ -75,6 +76,11 @@ public class FireBaseUserRepository implements UserRepository{
         Firestore firestore = FirestoreClient.getFirestore();
         ApiFuture<com.google.cloud.firestore.WriteResult> apiFuture =
                 firestore.collection(COLLECTION_NAME).document(user.getUsername()).set(user);
+        Map<String, Object> data = new HashMap<>();
+        data.put(CODE, "-1");
+        data.put(CONTENT, "-1");
+        firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(RECOMMEND_MISSION).document("-1").set(data);
+        firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(RECOMMEND_CHECKLIST).document("-1").set(data);
         return apiFuture.get().getUpdateTime().toString();
     }
 }

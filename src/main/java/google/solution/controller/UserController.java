@@ -63,7 +63,7 @@ public class UserController {
         }
         // 사용자가 있다면 기존 정보 리턴
         //User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
-        User user = ((User) userService.loadUserByUsername("7eKBEziQnHXBeJlNpX8GltmggA13"));
+        User user = ((User) userService.loadUserByUsername("7eKBEziQnHXBeJlNpX8GltmggA1399999"));
         if (user != null) {
             LoginRes loginRes = new LoginRes(user);
             return new BaseResponse<>(loginRes);
@@ -72,7 +72,7 @@ public class UserController {
         //User registeredUser = userService.register(
                 //decodedToken.getUid(), decodedToken.getEmail(), loginReq);
         User registeredUser = userService.register(
-                "7eKBEziQnHXBeJlNpX8GltmggA13", "ssss@naver.com", loginReq);
+                "7eKBEziQnHXBeJlNpX8GltmggA1399999", "ssss@naver.com", loginReq);
         LoginRes loginRes = new LoginRes(registeredUser);
         return new BaseResponse<>(loginRes);
     }
