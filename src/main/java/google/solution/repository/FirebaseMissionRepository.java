@@ -41,7 +41,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         if(documentSnapshot.exists()){
             mission = documentSnapshot.toObject(Mission.class);
             SaveRecommendMissionReq recommendMission = SaveRecommendMissionReq.createSaveRecommendMissionReq(code, mission.getContent());
-            saveRecommendMission(userId, code, recommendMission);
+//            saveRecommendMission(userId, code, recommendMission);
             return mission;
         }
         else{
@@ -67,7 +67,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         String category = Character.toString(missionCompleteReq.getCode().charAt(1));
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference missionCategory = db.collection(USER_COLLECTION).document(userId).collection(COLLECTION_NAME).document(id).collection(category);
-        Query query = missionCategory.orderBy("updateTime", Direction.DESCENDING).limit(4);
+        Query query = missionCategory.orderBy("updateTime", Direction.DESCENDING).limit(5);
         ApiFuture<QuerySnapshot> future = query.get();
         List<QueryDocumentSnapshot> missions = future.get().getDocuments();
         for (QueryDocumentSnapshot mission : missions) {
@@ -121,6 +121,17 @@ public class FirebaseMissionRepository implements MissionRepository {
             collection.document(missions.get(i).getCode()).set(docData);
         }
         return new MissionCompleteRes();
+    }
+
+    @Override
+    public void saveOneMission(MissionCompleteReq missionCompleteReq, String userId) throws Exception {
+        String code = missionCompleteReq.getCode();
+        Firestore db = FirestoreClient.getFirestore();
+        String id = Character.toString(code.charAt(0));
+        String category = Character.toString(code.charAt(1));
+        CollectionReference collection = db.collection(USER_COLLECTION).document(userId).
+                collection(COLLECTION_NAME).document(id).collection(category);
+        collection.document(code).set(missionCompleteReq);
     }
 
     @Override
@@ -184,6 +195,9 @@ public class FirebaseMissionRepository implements MissionRepository {
         Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_MISSION).listDocuments();
         for (DocumentReference documentReference : documentReferences) {
             GetRecommendMissionRes recommendMission = documentReference.get().get().toObject(GetRecommendMissionRes.class);
+            if (recommendMission.getCode().equals("-1")) {
+                continue;
+            }
             recommendMissions.add(recommendMission);
         }
         return recommendMissions;
@@ -196,6 +210,9 @@ public class FirebaseMissionRepository implements MissionRepository {
         Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_CHECKLIST).listDocuments();
         for (DocumentReference documentReference : documentReferences) {
             GetRecommendChecklistRes recommendChecklist = documentReference.get().get().toObject(GetRecommendChecklistRes.class);
+            if (recommendChecklist.getCode().equals("-1")) {
+                continue;
+            }
             recommendChecklists.add(recommendChecklist);
         }
         return recommendChecklists;
