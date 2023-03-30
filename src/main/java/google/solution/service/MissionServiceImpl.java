@@ -34,12 +34,12 @@ public class MissionServiceImpl implements MissionService {
             double averageScore  = calculateWeightedAverage(missions);
             missionRepository.saveScore(code, averageScore, userId);
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions, userId);
-            missionRepository.deleteRecommendMission(userId, code);
+//            missionRepository.deleteRecommendMission(userId, code);
             return missionCompleteRes;
         } else {
             missions.add(SuccessMission.missionCompleteReqToSuccessMission(missionCompleteReq));
             MissionCompleteRes missionCompleteRes = missionRepository.saveMissions(missions,userId);
-            missionRepository.deleteRecommendMission(userId, code);
+//            missionRepository.deleteRecommendMission(userId, code);
             return missionCompleteRes;
         }
     }

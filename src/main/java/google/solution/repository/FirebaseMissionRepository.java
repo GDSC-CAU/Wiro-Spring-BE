@@ -41,7 +41,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         if(documentSnapshot.exists()){
             mission = documentSnapshot.toObject(Mission.class);
             SaveRecommendMissionReq recommendMission = SaveRecommendMissionReq.createSaveRecommendMissionReq(code, mission.getContent());
-            saveRecommendMission(userId, code, recommendMission);
+//            saveRecommendMission(userId, code, recommendMission);
             return mission;
         }
         else{
