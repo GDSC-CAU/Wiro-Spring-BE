@@ -7,14 +7,13 @@ import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.Mission;
 import google.solution.domain.Score;
 import google.solution.domain.SuccessMission;
+import google.solution.domain.User;
 import google.solution.dto.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.impl.auth.GGSSchemeBase;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Repository
@@ -188,8 +187,7 @@ public class FirebaseMissionRepository implements MissionRepository {
         }
     }
 
-    @Override
-    public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception {
+    public List<GetRecommendMissionRes> getRecommendMissionAtMissionCollection(String userId) throws Exception {
         ArrayList<GetRecommendMissionRes> recommendMissions = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
         Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_MISSION).listDocuments();
@@ -202,9 +200,27 @@ public class FirebaseMissionRepository implements MissionRepository {
         }
         return recommendMissions;
     }
+@Override
+public List<GetRecommendMissionRes> getRecommendMission(String userId) throws Exception {
+    ArrayList<GetRecommendMissionRes> recommendMissions = new ArrayList<>();
+    Firestore db = FirestoreClient.getFirestore();
+    ApiFuture<DocumentSnapshot> documentSnapshotApiFuture = db.collection(USER_COLLECTION).document(userId).get();
+    User user = documentSnapshotApiFuture.get().toObject(User.class);
+    Map<String, String> recommendedMission = user.getRecommended_mission();
+    Set<String> keys = recommendedMission.keySet();
+    List<String> keyList = new ArrayList<>(keys);
+    Collection<String> values = recommendedMission.values();
+    List<String> valueList = new ArrayList<>(values);
+    for (int i = 0; i < keys.size(); i++) {
+        GetRecommendMissionRes getRecommendMissionRes = new GetRecommendMissionRes();
+        getRecommendMissionRes.setCode(keyList.get(i));
+        getRecommendMissionRes.setContent(valueList.get(i));
+        recommendMissions.add(getRecommendMissionRes);
+    }
+    return recommendMissions;
+}
 
-    @Override
-    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception {
+    public List<GetRecommendChecklistRes> getRecommendChecklistAtChecklistCollection(String userId) throws Exception {
         ArrayList<GetRecommendChecklistRes> recommendChecklists = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
         Iterable<DocumentReference> documentReferences = db.collection(USER_COLLECTION).document(userId).collection(RECOMMEND_CHECKLIST).listDocuments();
@@ -216,6 +232,26 @@ public class FirebaseMissionRepository implements MissionRepository {
             recommendChecklists.add(recommendChecklist);
         }
         return recommendChecklists;
+    }
+
+    @Override
+    public List<GetRecommendChecklistRes> getRecommendChecklist(String userId) throws Exception {
+        ArrayList<GetRecommendChecklistRes> recommendMissions = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        ApiFuture<DocumentSnapshot> documentSnapshotApiFuture = db.collection(USER_COLLECTION).document(userId).get();
+        User user = documentSnapshotApiFuture.get().toObject(User.class);
+        Map<String, String> recommendedMission = user.getRecommended_checklist();
+        Set<String> keys = recommendedMission.keySet();
+        List<String> keyList = new ArrayList<>(keys);
+        Collection<String> values = recommendedMission.values();
+        List<String> valueList = new ArrayList<>(values);
+        for (int i = 0; i < keys.size(); i++) {
+            GetRecommendChecklistRes getRecommendChecklistRes = new GetRecommendChecklistRes();
+            getRecommendChecklistRes.setCode(keyList.get(i));
+            getRecommendChecklistRes.setContent(valueList.get(i));
+            recommendMissions.add(getRecommendChecklistRes);
+        }
+        return recommendMissions;
     }
 
 }

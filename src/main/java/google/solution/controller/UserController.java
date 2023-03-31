@@ -54,25 +54,21 @@ public class UserController {
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
         try {
-//            String token = RequestUtil.getAuthorizationToken(authorization);
-//            decodedToken = firebaseAuth.verifyIdToken(token);
-        } catch (IllegalArgumentException e) {
-//        } catch (IllegalArgumentException | FirebaseAuthException e) {
+            String token = RequestUtil.getAuthorizationToken(authorization);
+            decodedToken = firebaseAuth.verifyIdToken(token);
+        } catch (IllegalArgumentException | FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
         }
         // 사용자가 있다면 기존 정보 리턴
-//        User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
-        User user = ((User) userService.loadUserByUsername("noel"));
+        User user = ((User) userService.loadUserByUsername(decodedToken.getUid()));
         if (user != null) {
             LoginRes loginRes = new LoginRes(user);
             return new BaseResponse<>(loginRes);
         }
         // 사용자를 등록한다.
         User registeredUser = userService.register(
-                "noel", "sss@naver.com", loginReq);
-//        User registeredUser = userService.register(
-//                decodedToken.getUid(), decodedToken.getEmail(), loginReq);
+                decodedToken.getUid(), decodedToken.getEmail(), loginReq);
         LoginRes loginRes = new LoginRes(registeredUser);
         return new BaseResponse<>(loginRes);
     }
