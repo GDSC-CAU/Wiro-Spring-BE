@@ -8,6 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @Getter
@@ -21,6 +24,8 @@ public class User implements UserDetails {
     private String disease;
     private String id;
     private String medicine;
+    private Map<String, String> recommended_mission;
+    private Map<String, String> recommended_checklist;
 
     public User(String username, String email, String nickname, String id) {
         this.username = username;

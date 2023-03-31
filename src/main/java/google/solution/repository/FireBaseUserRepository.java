@@ -10,7 +10,9 @@ import google.solution.dto.UpdateUserRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -27,6 +29,8 @@ public class FireBaseUserRepository implements UserRepository{
     public static final String RECOMMEND_CHECKLIST = "recommend_checklist";
     public static final String CODE = "code";
     public static final String CONTENT = "content";
+    public static final String SCORE = "score";
+
 
 
     @Override
@@ -81,6 +85,13 @@ public class FireBaseUserRepository implements UserRepository{
         data.put(CONTENT, "-1");
         firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(RECOMMEND_MISSION).document("-1").set(data);
         firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(RECOMMEND_CHECKLIST).document("-1").set(data);
+        Map<String, Object> score = new HashMap<>();
+        List<Integer> scores = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            scores.add(0);
+        }
+        score.put("scores", scores);
+        firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(SCORE).document(user.getUsername()).set(score);
         return apiFuture.get().getUpdateTime().toString();
     }
 }
