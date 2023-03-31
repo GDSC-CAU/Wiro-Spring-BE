@@ -91,7 +91,8 @@ public class FireBaseUserRepository implements UserRepository{
             scores.add(0);
         }
         score.put("scores", scores);
-        firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(SCORE).document(user.getUsername()).set(score);
+        firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(SCORE).document(RECOMMEND_MISSION).set(score);
+        firestore.collection(COLLECTION_NAME).document(user.getUsername()).collection(SCORE).document(RECOMMEND_CHECKLIST).set(score);
         return apiFuture.get().getUpdateTime().toString();
     }
 }

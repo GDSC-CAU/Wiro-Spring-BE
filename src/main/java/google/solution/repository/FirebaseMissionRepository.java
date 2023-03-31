@@ -82,7 +82,12 @@ public class FirebaseMissionRepository implements MissionRepository {
         int category = (code.charAt(1)) - '0';
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference collection = db.collection(USER_COLLECTION).document(userId).collection(SCORE);
-        DocumentReference docRef = collection.document(userId);
+        DocumentReference docRef = null;
+        if (id.equals("1")) {
+            docRef = collection.document(RECOMMEND_MISSION);
+        } else {
+            docRef = collection.document(RECOMMEND_CHECKLIST);
+        }
         ApiFuture<DocumentSnapshot> future  = docRef.get();
         DocumentSnapshot document = future.get();
         if (document.getData() == null) {
