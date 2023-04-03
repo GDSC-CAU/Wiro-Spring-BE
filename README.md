@@ -65,9 +65,7 @@ git clone https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Spring-BE.git
 
 2. Open Project with IntelliJ IDEA
 
-3. Buil with IntelliJ IDEA & Enjoy!
-
-3. Make JAR file
+3. Build JAR file with command & Enjoy!
 
 ```shell
 ./gradlew clean build
