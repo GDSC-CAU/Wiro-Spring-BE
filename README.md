@@ -44,6 +44,37 @@ Overall process of our solution is as follows.
 
 ---
 
+## Get Started
+
+### Download
+
+You can get JAR file from [Release Page](https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Spring-BE/releases/tag/release1) of this Repository.
+
+### Required for Self-Build
+
+- Java SE 11
+- IntelliJ IDEA
+
+### Steps for Self-Build
+
+1. Clone this Project
+
+```shell
+git clone https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Spring-BE.git
+```
+
+2. Open Project with IntelliJ IDEA
+
+3. Buil with IntelliJ IDEA & Enjoy!
+
+3. Make JAR file
+
+```shell
+./gradlew clean build
+```
+
+---
+
 ## Team Info
 
 - Yongmin Yoo (유용민)
