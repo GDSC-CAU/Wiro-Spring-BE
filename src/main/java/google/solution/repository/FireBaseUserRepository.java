@@ -4,7 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import google.solution.domain.User;
-import google.solution.dto.GetUserRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,6 @@
 package google.solution.controller;
 
 
-import google.solution.domain.Message;
 import google.solution.dto.*;
 import google.solution.service.ChatService;
 import google.util.BaseResponse;

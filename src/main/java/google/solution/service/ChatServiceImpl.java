@@ -1,6 +1,5 @@
 package google.solution.service;
 
-import google.solution.domain.Message;
 import google.solution.dto.*;
 import google.solution.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;

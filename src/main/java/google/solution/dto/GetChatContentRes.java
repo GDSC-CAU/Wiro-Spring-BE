@@ -1,6 +1,5 @@
 package google.solution.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import google.solution.domain.Message;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
