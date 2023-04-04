@@ -38,7 +38,7 @@ Overall process of our solution is as follows.
 
 [Flutter Application Repository](https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Flutter-App)
 
-[Back-End Repository](https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Spring-BE)
+[Back-End Repository (Currently Watching)](https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Spring-BE)
 
 [Python AI Repository](https://github.com/GDSC-CAU/Solution-Challenge-Team-2-Python-AI)
 
