@@ -10,7 +10,6 @@ import google.solution.domain.SuccessMission;
 import google.solution.domain.User;
 import google.solution.dto.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.impl.auth.GGSSchemeBase;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -40,7 +39,6 @@ public class FirebaseMissionRepository implements MissionRepository {
         if(documentSnapshot.exists()){
             mission = documentSnapshot.toObject(Mission.class);
             SaveRecommendMissionReq recommendMission = SaveRecommendMissionReq.createSaveRecommendMissionReq(code, mission.getContent());
-//            saveRecommendMission(userId, code, recommendMission);
             return mission;
         }
         else{

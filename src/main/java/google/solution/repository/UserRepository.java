@@ -1,7 +1,6 @@
 package google.solution.repository;
 
 import google.solution.domain.User;
-import google.solution.dto.GetUserRes;
 import google.solution.dto.UpdateUserReq;
 import google.solution.dto.UpdateUserRes;
 
